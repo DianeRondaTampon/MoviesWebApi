@@ -162,20 +162,6 @@ namespace MoviesWebApi.Application
 
                 dataNumberDtoList.Add(dataNumberDto);
             }
-
-
-
-
-            //dataNumberDto = new DataNumberDto()
-            
-
-            //List<Object> objects =.Where(c => c.Quantity != null && c. == quantity).ToList();
-
-            //string result = "";
-            //string nationalFilipino = "filipino";
-            //string clientOfTheBank = "yes";
-            //if (age >= 18 && nationalFilipino == nationality && clientOfTheBank == client)
-            //{
             
 
             return dataNumberDtoList;
