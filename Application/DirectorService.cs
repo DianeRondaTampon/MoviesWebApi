@@ -1,15 +1,20 @@
-﻿using MoviesWebApi.Models;
+﻿using MoviesWebApi.Dto;
+using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoviesWebApi.Application
 {
     public class DirectorService
     {
         private readonly DirectorRepository _repository;
+        private readonly MovieRepository _movieRepository;
 
-        public DirectorService(DirectorRepository repository)
+        //this is a constructor,doens't have a return parameter, has a list of input parameter 
+        public DirectorService(DirectorRepository repository, MovieRepository movieRepository)
         {
-            _repository = repository;
+            _repository = repository ;
+            _movieRepository = movieRepository;
         }
 
         public List<Director> GetAllDirector()
@@ -61,5 +66,41 @@ namespace MoviesWebApi.Application
             _repository.DeleteDirector(id);
             return true;
         }
+
+        public List<MovieDirectorDto> getMoviesFromDirector(string nameOfTheDirector)
+        {
+            List<MovieDirectorDto> movieDirectorDto = new List<MovieDirectorDto>();//Create an empty list
+
+            //get all the movies of the director
+
+             //var moviesEnumerable = _movieRepository.GetAllMovie().Where(m => m.DirectorId == 1);
+             List<Movie> movies= _movieRepository.GetAllMovies().Where(m => m.Director != null && m.Director.Name == nameOfTheDirector).ToList();
+
+            //List<Movie> movies = _movieRepository.GetAllMovies()
+            //    .Include(m => m.Director) // Include the Director navigation property
+            //    .Where(m => m.Director != null && m.Director.Name == nameOfTheDirector)
+            //    .ToList();
+
+            //transverse all the movies of the list
+
+            foreach (Movie movie in movies)
+
+            {
+                //add element to the list ,way1:
+                movieDirectorDto.Add(new MovieDirectorDto
+                {
+                    MovieId = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year,
+                    DirectorId = movie.DirectorId,
+                    GenderId = movie.GenderId,
+                    DirectorName = movie.Director?.Name,
+                }); ;
+
+            }
+
+            return movieDirectorDto;
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi.Application;
 using MoviesWebApi.Repositories;
+using System.Configuration;
 
 namespace MoviesWebApi
 {
@@ -15,9 +16,11 @@ namespace MoviesWebApi
             //dependency injection:
 
             // Add DbContext
-            builder.Services.AddDbContext<MovieDbContext>(options =>
-                          options.UseSqlServer("Server=DESKTOP-9998B8S\\SQLEXPRESS;Database=Movies;User Id=userMovie;Password=userMovie;TrustServerCertificate=True;"));
+            builder.Services.AddDbContext<MovieDbContext>(options => 
+                options.UseLazyLoadingProxies()
+                    .UseSqlServer("Server=DESKTOP-9998B8S\\SQLEXPRESS;Database=Movies;User Id=userMovie;Password=userMovie;TrustServerCertificate=True;"));
 
+ 
             // Add Repositories
             builder.Services.AddScoped<ActorRepository>();
             builder.Services.AddScoped<DirectorRepository>();

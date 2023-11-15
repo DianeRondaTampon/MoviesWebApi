@@ -21,11 +21,20 @@ namespace MoviesWebApi
         {
             if (!optionsBuilder.IsConfigured)
             {
+                //this property for Lazy Loading
+                optionsBuilder.UseLazyLoadingProxies();
+
+
                 // Replace "YourServer", "YourDatabase", "YourUsername", and "YourPassword" with your actual database details
                 optionsBuilder.UseSqlServer("Server=DESKTOP-9998B8S\\SQLEXPRESS;Database=Movies;User Id=userMovie;Password=userMovie;TrustServerCertificate=True;");
+
+                
             }
 
 
         }
+
+
+        
     }
 }

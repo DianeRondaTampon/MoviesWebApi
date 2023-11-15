@@ -15,7 +15,7 @@ namespace MoviesWebApi.Application
 
         public List<Movie> GetAllMovie()
         {
-            return _repository.GetAllMovie();
+            return _repository.GetAllMovies().ToList();
         }
 
         public Movie? GetMovieById(int id)

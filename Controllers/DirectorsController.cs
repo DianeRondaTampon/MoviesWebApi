@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
@@ -91,5 +92,13 @@ namespace MoviesWebApi.Controllers
                 return NotFound();
             }
         }
+        // GET: api/Directors/getMoviesFromDirector
+        [HttpGet("getMoviesFromDirector")]
+        public ActionResult<List<MovieDirectorDto>> getMoviesFromDirector(string nameOfTheDirector)
+        {
+            List<MovieDirectorDto> result = _directorService.getMoviesFromDirector(nameOfTheDirector);
+            return Ok(result);
+        }
+
     }
 }

@@ -14,9 +14,9 @@ namespace MoviesWebApi.Repositories
             _context = context;
         }
 
-        public List<Movie> GetAllMovie()
+        public IQueryable<Movie> GetAllMovies()
         {
-            return _context.Movie.ToList();
+            return _context.Movie;
         }
 
         public Movie? GetMovieById(int id)
