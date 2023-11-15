@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MoviesWebApi.Controllers
 {
@@ -85,5 +87,18 @@ namespace MoviesWebApi.Controllers
             string result = _calculationService.OpenAnBankAccount(age,nationality,client);
             return Ok(result);
         }
+
+        // GET: api/Calculation/generateDataNumber
+        [HttpGet("generateDataNumber")]
+        public ActionResult<List<DataNumberDto>> generateDataNumber(int quantity)
+        {
+            List<DataNumberDto> result = _calculationService.generateDataNumber(quantity);
+            return Ok(result);
+        }
+       
+
+
+
     }
 }
+

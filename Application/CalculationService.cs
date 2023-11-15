@@ -1,5 +1,9 @@
 ﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using MoviesWebApi.Dto;
+using MoviesWebApi.Models;
+using MoviesWebApi.Repositories;
 using NuGet.Packaging.Signing;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Printing;
 
@@ -129,6 +133,67 @@ namespace MoviesWebApi.Application
 
             return result;
         }
+
+
+        public List<DataNumberDto> generateDataNumber(int quantity)
+        {
+            List<DataNumberDto> dataNumberDtoList = new List<DataNumberDto>();
+
+            for (int i = 1; i <= quantity; i++)
+            {
+                string even = "";
+                if(i % 2 == 0)
+                {
+                    even = "even";
+                }
+                else
+                {
+                    even = "odd";
+                }
+                DataNumberDto dataNumberDto = new DataNumberDto()
+                {
+                    Id = i,
+                    Even = even,
+                    Double = i * 2,
+                    Adult = i >= 18,
+
+                };
+
+
+                dataNumberDtoList.Add(dataNumberDto);
+            }
+
+
+
+
+            //dataNumberDto = new DataNumberDto()
+            
+
+            //List<Object> objects =.Where(c => c.Quantity != null && c. == quantity).ToList();
+
+            //string result = "";
+            //string nationalFilipino = "filipino";
+            //string clientOfTheBank = "yes";
+            //if (age >= 18 && nationalFilipino == nationality && clientOfTheBank == client)
+            //{
+            
+
+            return dataNumberDtoList;
+        }
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
