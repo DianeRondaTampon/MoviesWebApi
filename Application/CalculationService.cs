@@ -1,4 +1,5 @@
-﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Identity.Client;
 using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
@@ -190,6 +191,46 @@ namespace MoviesWebApi.Application
 
             return car;
         }
+
+
+        public int? transformHourFromPhilippinesToSpain(int hour)
+        {
+            //validation of Input Data
+            if (hour >= 24)
+            {
+                return null;//input param is wrong, so we return null
+            }
+            else
+            { 
+                if (hour < 0)
+                {
+                    return null;//input param is wrong, so we return null
+                }
+                else
+                {
+                    //the input parameter is right
+                    int spainHour = hour - 7;
+
+                    if (spainHour < 0)
+                    {
+                        spainHour = spainHour + 24;
+                    }
+                    return spainHour;
+                }
+
+            }
+
+        }
+           
+          
+           
+           
+
+
+
+
+
+
     }
 }
 

@@ -107,6 +107,27 @@ namespace MoviesWebApi.Controllers
             return Ok(car);
         }
 
+        // GET: api/Calculation/transformHourFromPhilippinesToSpain
+        [HttpGet("transformHourFromPhilippinesToSpain")]
+        public ActionResult<int> transformHourFromPhilippinesToSpain(int hour)
+        {
+            
+            int? result = _calculationService.transformHourFromPhilippinesToSpain(hour);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(result);
+            }
+            
+        }
+
+  
+
+
+
 
     }
 }
