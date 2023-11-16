@@ -5,6 +5,7 @@ using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace MoviesWebApi.Controllers
 {
@@ -95,8 +96,16 @@ namespace MoviesWebApi.Controllers
             List<DataNumberDto> result = _calculationService.generateDataNumber(quantity);
             return Ok(result);
         }
-       
 
+
+        // GET: api/Calculation/workWithCar
+        [HttpGet("workWithCar")]
+        public ActionResult<Car> workWithCar(string color)
+        {
+            Car car = _calculationService.workWithCar(color);
+
+            return Ok(car);
+        }
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.Identity.Client;
 using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
@@ -48,9 +49,9 @@ namespace MoviesWebApi.Application
 
         public string youCanVote(int age)
         {
-            
+
             string result = "";
-             
+
             if (age >= 18)
             {
                 result = "You can vote";
@@ -120,7 +121,7 @@ namespace MoviesWebApi.Application
         {
 
             string result = "";
-            string nationalFilipino= "filipino";
+            string nationalFilipino = "filipino";
             string clientOfTheBank = "yes";
             if (age >= 18 && nationalFilipino == nationality && clientOfTheBank == client)
             {
@@ -142,7 +143,7 @@ namespace MoviesWebApi.Application
             for (int i = 1; i <= quantity; i++)
             {
                 string even = "";
-                if(i % 2 == 0)
+                if (i % 2 == 0)
                 {
                     even = "even";
                 }
@@ -150,37 +151,60 @@ namespace MoviesWebApi.Application
                 {
                     even = "odd";
                 }
-                DataNumberDto dataNumberDto = new DataNumberDto()
-                {
-                    Id = i,
-                    Even = even,
-                    Double = i * 2,
-                    Adult = i >= 18,
 
-                };
-
+                DataNumberDto dataNumberDto = new DataNumberDto();
+                //{
+                //    Id = i,
+                //    //Even = even,
+                //    Even = i % 2 == 0 ? "even" : "odd",
+                //    Double = i * 2,
+                //    Adult = i >= 18,
+                //};
+                dataNumberDto.Double = i * 2;
+                dataNumberDto.Id = i;
+                dataNumberDto.Even = even;
+                dataNumberDto.Adult = i >= 18;
 
                 dataNumberDtoList.Add(dataNumberDto);
             }
-            
+
+
 
             return dataNumberDtoList;
         }
 
 
-      
 
 
 
+        public Car workWithCar(string color)
+        {
+            //create an object of the class using a constructor
+            Car car = new Car(color);
 
+            car.List.Add(10);
 
+            car.accelerate();
+            car.accelerate();
+            car.accelerate();
 
-
-
-
-
-
-
-
+            return car;
+        }
     }
 }
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+   
+
