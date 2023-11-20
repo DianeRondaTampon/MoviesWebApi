@@ -8,26 +8,26 @@ namespace MoviesWebApi.Application
 {
     public class ActorService
     {
-        private readonly ActorRepository _repository;
+        private readonly ActorRepository actorRepository;
 
-        public ActorService(ActorRepository repository)
+        public ActorService(ActorRepository actorRepository)
         {
-            _repository = repository;
+            this.actorRepository = actorRepository;
         }
 
         public List<Actor> GetAllActor()
         {
-            return _repository.GetAllActor();
+            return actorRepository.GetAllActor();
         }
 
         public Actor? GetActorById(int id)
         {
-            return _repository.GetActorById(id);
+            return actorRepository.GetActorById(id);
         }
 
         public Actor CreateActor(Actor actor)
         {
-            _repository.AddActor(actor);
+            actorRepository.AddActor(actor);
             return actor;
         }
 
@@ -39,20 +39,20 @@ namespace MoviesWebApi.Application
         public bool UpdateActor(int id, Actor actor)
         {
             //check if the actor dont exist
-            if (_repository.GetActorById(id) == null)
+            if (actorRepository.GetActorById(id) == null)
                 return false;
 
             actor.Id = id;
-            _repository.UpdateActor(actor);
+            actorRepository.UpdateActor(actor);
             return true;
         }
 
         public bool DeleteActor(int id)
         {
-            if (_repository.GetActorById(id) == null)
+            if (actorRepository.GetActorById(id) == null)
                 return false;
 
-            _repository.DeleteActor(id);
+            actorRepository.DeleteActor(id);
             return true;
         }
 
