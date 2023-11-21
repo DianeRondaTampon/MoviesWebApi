@@ -132,6 +132,14 @@ namespace MoviesWebApi.Controllers
         }
 
 
+        // GET: api/Calculation/SchoolGradeQualification 
+        [HttpGet("SchoolGradeQualification ")]
+        public ActionResult<string> SchoolGradeQualification(int age)
+        {
+            string result = _calculationService.SchoolGradeQualification(age);
+            return Ok(result);
+        }
+
     }
 }
 

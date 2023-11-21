@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Identity.Client;
 using MoviesWebApi.Dto;
@@ -227,7 +228,7 @@ namespace MoviesWebApi.Application
         {
             string result = "";
 
-            if (age <= 0)
+            if (age < 0)
             {
                 result = "You are invalid age";
             }
@@ -235,7 +236,7 @@ namespace MoviesWebApi.Application
             {
                 result = "You are underage";
             }
-            else if (age >= 18 && age < 60)
+            else if ( age < 65)
             {
                 result = "You are an adult";
             }
@@ -246,6 +247,50 @@ namespace MoviesWebApi.Application
 
             return result;
         }
+
+
+        public string SchoolGradeQualification(int grade)
+        {
+            string result = "";
+
+            if (grade < 0 || grade > 100 )
+            {
+                result = "You grade is invalid";
+            }
+            else if (grade < 60)
+            {
+                result = "F ";
+            }
+            else if (grade < 65)
+            {
+                result = "E";
+            }
+            else if (grade < 70)
+            {
+                result = "D";
+            }
+            else if (grade < 80)
+            {
+                result = "C";
+            }
+            else if (grade <= 90)
+            {
+                result = "B";
+            }
+             else
+            {
+                result = "A";
+            }
+            return result;
+        }
+
+
+
+
+
+
+
+
     }
 
 }
