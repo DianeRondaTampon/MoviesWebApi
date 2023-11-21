@@ -201,7 +201,7 @@ namespace MoviesWebApi.Application
                 return null;//input param is wrong, so we return null
             }
             else
-            { 
+            {
                 if (hour < 0)
                 {
                     return null;//input param is wrong, so we return null
@@ -221,18 +221,35 @@ namespace MoviesWebApi.Application
             }
 
         }
-           
-          
-           
-           
 
 
+        public string CalculateAgeStatus(int age)
+        {
+            string result = "";
 
+            if (age <= 0)
+            {
+                result = "You are invalid age";
+            }
+            else if (age < 18)
+            {
+                result = "You are underage";
+            }
+            else if (age >= 18 && age < 60)
+            {
+                result = "You are an adult";
+            }
+            else 
+            {
+                result = "You are retired";
+            }
 
-
-
+            return result;
+        }
     }
+
 }
+
 
 
 

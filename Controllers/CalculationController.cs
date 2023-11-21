@@ -122,11 +122,14 @@ namespace MoviesWebApi.Controllers
                 return Ok(result);
             }
             
+        }    
+        // GET: api/Calculation/CalculateAgeStatus
+        [HttpGet("CalculateAgeStatus")]
+        public ActionResult<string> CalculateAgeStatus(int age)
+        {
+            string result = _calculationService.CalculateAgeStatus(age);
+            return Ok(result);
         }
-
-  
-
-
 
 
     }
