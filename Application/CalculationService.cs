@@ -236,11 +236,11 @@ namespace MoviesWebApi.Application
             {
                 result = "You are underage";
             }
-            else if ( age < 65)
+            else if (age < 65)
             {
                 result = "You are an adult";
             }
-            else 
+            else
             {
                 result = "You are retired";
             }
@@ -253,7 +253,7 @@ namespace MoviesWebApi.Application
         {
             string result = "";
 
-            if (grade < 0 || grade > 100 )
+            if (grade < 0 || grade > 100)
             {
                 result = "You grade is invalid";
             }
@@ -277,7 +277,7 @@ namespace MoviesWebApi.Application
             {
                 result = "B";
             }
-             else
+            else
             {
                 result = "A";
             }
@@ -285,16 +285,54 @@ namespace MoviesWebApi.Application
         }
 
 
+        public List<int> ListOfNumbersOrdered(List<int> list)
+        {
+            //NEED TO STORAGE THE "INDEX" INTO A VARIABLE, for know what part of list is order and what part of the list is unordered
+            for (int index = 0; index < list.Count - 1; index++)
+            {
+                //"UNORDERED LIST" is part of the list starting in INDEX, finish in the end of the list
+                //transverse the "UNORDERED list" to find the smallest element
+                //insert the smallest element in the INDEX
+                //then remove from the position it was
 
 
+                //find the smallest
+
+                int minimum = int.MaxValue;
+                int indexMinimum = 0; //is the position of the minimum in the list
+
+                //transverse the unordered list
+                for (int i = index; i < list.Count; i++) 
+                {
+                    //i will compare all the elements of the list with the smallest number to fimd the smallest,
+                    //if the elements of the list is smaller, then put that as a new smallest number
+                    if (list[i] < minimum)
+                    {
+                        minimum = list[i];
+                        indexMinimum = i;
+                    }
+                }
 
 
+                //insert the smallest element in the INDEX Position
+                list.Insert(index, minimum);
+
+
+                //then remove from the position it was
+                list.RemoveAt(indexMinimum + 1);
+
+            }
+           
+
+            return list;
+        }
+
+        
+                                          
 
 
     }
-
 }
-
 
 
 

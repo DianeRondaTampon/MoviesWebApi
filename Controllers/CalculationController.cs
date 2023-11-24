@@ -40,18 +40,18 @@ namespace MoviesWebApi.Controllers
         [HttpGet("repeatStrings")]
         public ActionResult<int> repeatStrings(int number, string text)
         {
-            string result = _calculationService.repeatStrings(number,text);
+            string result = _calculationService.repeatStrings(number, text);
 
             return Ok(result);
         }
 
-      
+
 
         // GET: api/Calculation/sumTwoNumbers
         [HttpGet("sumTwoNumbers")]
-        public  ActionResult<int> sumTwoNumbers(int number1, int number2) 
+        public ActionResult<int> sumTwoNumbers(int number1, int number2)
         {
-            int total =_calculationService.sumTwoNumbers(number1,number2);               
+            int total = _calculationService.sumTwoNumbers(number1, number2);
 
             return Ok(total);
         }
@@ -77,15 +77,15 @@ namespace MoviesWebApi.Controllers
         [HttpGet("youCanVote")]
         public ActionResult<string> youCanVote(int age)
         {
-            string result=_calculationService.youCanVote(age);
+            string result = _calculationService.youCanVote(age);
             return Ok(result);
         }
 
         // GET: api/Calculation/OpenAnBankAccount
         [HttpGet("OpenAnBankAccount")]
-        public ActionResult<string> OpenAnBankAccount(int age, string nationality,string client)
+        public ActionResult<string> OpenAnBankAccount(int age, string nationality, string client)
         {
-            string result = _calculationService.OpenAnBankAccount(age,nationality,client);
+            string result = _calculationService.OpenAnBankAccount(age, nationality, client);
             return Ok(result);
         }
 
@@ -111,7 +111,7 @@ namespace MoviesWebApi.Controllers
         [HttpGet("transformHourFromPhilippinesToSpain")]
         public ActionResult<int> transformHourFromPhilippinesToSpain(int hour)
         {
-            
+
             int? result = _calculationService.transformHourFromPhilippinesToSpain(hour);
             if (result == null)
             {
@@ -121,8 +121,8 @@ namespace MoviesWebApi.Controllers
             {
                 return Ok(result);
             }
-            
-        }    
+
+        }
         // GET: api/Calculation/CalculateAgeStatus
         [HttpGet("CalculateAgeStatus")]
         public ActionResult<string> CalculateAgeStatus(int age)
@@ -139,6 +139,26 @@ namespace MoviesWebApi.Controllers
             string result = _calculationService.SchoolGradeQualification(age);
             return Ok(result);
         }
+
+        // GET: api/Calculation/ListOfNumbersOrdered
+        [HttpGet("ListOfNumbersOrdered")]
+        public ActionResult<List<int>> ListOfNumbersOrdered([FromQuery] List<int> list)
+        {
+            List<int> listOrdered =_calculationService.ListOfNumbersOrdered(list);
+            return Ok(listOrdered);
+        }
+
+
+        // GET: api/Calculation/ListOfString
+        [HttpGet("ListOfString")]
+        public ActionResult<List<string>> ListOfString([FromQuery] List<string> strings)
+        {
+             return Ok(strings);
+        }
+
+       
+      
+
 
     }
 }
