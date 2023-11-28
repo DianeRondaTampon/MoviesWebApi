@@ -1,4 +1,5 @@
-﻿using MoviesWebApi.Models;
+﻿using MoviesWebApi.Dto;
+using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using NuGet.Protocol.Core.Types;
 
@@ -10,7 +11,7 @@ namespace MoviesWebApi.Application
 
         public MovieService(MovieRepository repository)
         {
-            _repository =   repository;
+            _repository = repository;
         }
 
         public List<Movie> GetAllMovie()
@@ -52,5 +53,34 @@ namespace MoviesWebApi.Application
             _repository.DeleteMovie(id);
             return true;
         }
+
+
+        public List<MovieDto> getMovieFromYear(int yearFrom, int yearUntil)
+        {
+            List<Movie> movies = _repository.GetAllMovies().Where(m => m.Year >= yearFrom && m.Year <= yearUntil).ToList();
+
+            List<MovieDto> result = new List<MovieDto>();
+
+
+            foreach (Movie movie in movies)
+            {
+                MovieDto movieDto = new MovieDto()
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year,
+                    NameDirector = movie.Director?.Name,
+                    NameGender = movie.Gender?.Name
+                };
+                result.Add(movieDto);
+
+            }
+
+            return result;
+        }
     }
 }
+            
+ 
+
+  

@@ -14,6 +14,8 @@ namespace MoviesWebApi.Models
         //navigation property
         public virtual Director Director { get; set; }
 
+        public virtual Gender Gender { get;set; }
+
 
 
     }

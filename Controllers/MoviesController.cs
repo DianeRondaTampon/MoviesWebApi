@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
@@ -88,6 +89,20 @@ namespace MoviesWebApi.Controllers
             {
                 return NotFound();
             }
-        }     
+        }
+
+
+        // GET: api/Actors/getMovieFromYear
+        [HttpGet("getMovieFromYear")]
+        public ActionResult<List<MovieDto>> getMovieFromYear(int yearFrom, int yearUntil)
+        {
+            List <MovieDto> movies = _movieService.getMovieFromYear(yearFrom, yearUntil);
+            return Ok(movies);
+        }
+
+
+
+
+
     }
 }

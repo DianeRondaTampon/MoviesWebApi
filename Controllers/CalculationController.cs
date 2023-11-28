@@ -156,8 +156,13 @@ namespace MoviesWebApi.Controllers
              return Ok(strings);
         }
 
-       
-      
+
+        // GET: api/Calculation/findSubstring
+        [HttpGet("findSubstring")]
+        public ActionResult<int?> findSubstring(string substring, string inputString)
+        {
+            return Ok(_calculationService.findSubstring(substring, inputString));
+        }
 
 
     }

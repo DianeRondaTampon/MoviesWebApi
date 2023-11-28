@@ -7,6 +7,7 @@ using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using NuGet.Packaging.Signing;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing.Printing;
 
@@ -140,7 +141,7 @@ namespace MoviesWebApi.Application
 
         public List<DataNumberDto> generateDataNumber(int quantity)
         {
-            List<DataNumberDto> dataNumberDtoList = new List<DataNumberDto>();
+            List<DataNumberDto> result = new List<DataNumberDto>();
 
             for (int i = 1; i <= quantity; i++)
             {
@@ -167,12 +168,10 @@ namespace MoviesWebApi.Application
                 dataNumberDto.Even = even;
                 dataNumberDto.Adult = i >= 18;
 
-                dataNumberDtoList.Add(dataNumberDto);
+                result.Add(dataNumberDto);
             }
 
-
-
-            return dataNumberDtoList;
+            return result;
         }
 
 
@@ -196,16 +195,18 @@ namespace MoviesWebApi.Application
 
         public int? transformHourFromPhilippinesToSpain(int hour)
         {
+            int? result = null;
             //validation of Input Data
             if (hour >= 24)
             {
-                return null;//input param is wrong, so we return null
+                result = null; ;//input param is wrong, so we return null
+               
             }
             else
             {
                 if (hour < 0)
                 {
-                    return null;//input param is wrong, so we return null
+                    result = null;//input param is wrong, so we return null
                 }
                 else
                 {
@@ -216,11 +217,11 @@ namespace MoviesWebApi.Application
                     {
                         spainHour = spainHour + 24;
                     }
-                    return spainHour;
+                    result = spainHour;
                 }
 
             }
-
+            return result;
         }
 
 
@@ -302,7 +303,7 @@ namespace MoviesWebApi.Application
                 int indexMinimum = 0; //is the position of the minimum in the list
 
                 //transverse the unordered list
-                for (int i = index; i < list.Count; i++) 
+                for (int i = index; i < list.Count; i++)
                 {
                     //i will compare all the elements of the list with the smallest number to fimd the smallest,
                     //if the elements of the list is smaller, then put that as a new smallest number
@@ -322,13 +323,50 @@ namespace MoviesWebApi.Application
                 list.RemoveAt(indexMinimum + 1);
 
             }
-           
+
 
             return list;
         }
 
-        
-                                          
+
+
+        public int? findSubstring(string substring, string inputString)
+        {
+            // I will compare each possible substring with the provided substring until I found the match or
+            // Until it will be finidhed means = NULL/not found
+            int? result = null;//not found
+
+            int inputLength = inputString.Length;
+            int substringLenght = substring.Length;
+
+            for (int i = 0; i <= inputLength - substringLenght;i++)
+            {
+                //get the first part of the comparison, from the inputString, for example: "my"
+                //the second part of the comparison, substring , "is"
+
+                //check if substring match to the part of inputString
+                if (inputString.Substring(i, substringLenght) == substring)
+                {
+
+                    //i will return the position because substring is found
+                    result = i ;
+
+                }
+                else
+                {
+                   //return not found
+                   
+                }
+            }
+
+            //i will return the position i where i found it or null
+            return result;
+                
+        }
+
+    
+
+
 
 
     }

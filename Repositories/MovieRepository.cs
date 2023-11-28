@@ -16,6 +16,7 @@ namespace MoviesWebApi.Repositories
 
         public IQueryable<Movie> GetAllMovies()
         {
+            //we are returning IQueryable instead of List because we use the property navigation test
             return _context.Movie;
         }
 
