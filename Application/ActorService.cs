@@ -82,17 +82,14 @@ namespace MoviesWebApi.Application
         public List<ActorsMovieDto> actorsOfTheMovie (string movieName)
         {
             Movie movie = movieRepository.GetAllMovies().Where(m => m.Title == movieName).FirstOrDefault();
-            List<MovieActor> movieActors = movieRepository.GetAllMovies().Where(m => m.Title == movieName)
-                .SelectMany(m => m.MovieActor).ToList();
 
             List<ActorsMovieDto> actorsMovieDto = new List<ActorsMovieDto>();
 
-            foreach (MovieActor movieActor in movieActors) 
+            foreach (MovieActor movieActor in movie.MovieActor) 
             {
                 
                 ActorsMovieDto actorMovieDto = new ActorsMovieDto()
                 {
-
                     NameActor = movieActor.Actor.Name,
                     MovieId = movie.Id,
                     ActorId = movieActor.ActorId,
