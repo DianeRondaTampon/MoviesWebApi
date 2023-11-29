@@ -8,6 +8,7 @@
         public int? ActorId { get; set; }
         public string Character { get; set; }
 
-       
+        //navigation property
+        public virtual Actor Actor { get; set; }
     }
 }

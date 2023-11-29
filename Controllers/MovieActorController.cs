@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MovieActorsController : ControllerBase
+    public class MovieActorController : ControllerBase
     {
         private readonly MovieActorService _movieactorService;
 
-        public MovieActorsController(MovieActorService movieActorservice)
+        public MovieActorController(MovieActorService movieActorservice)
         {
             _movieactorService = movieActorservice;
         }
@@ -69,7 +70,7 @@ namespace MoviesWebApi.Controllers
         // POST: api/MovieActors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MovieActor>> PostMovieActor(MovieActor movieActor)
+        public async Task<ActionResult<MovieActor>> PostMovieActor(CreateMovieActorDto movieActor)
         {
             _movieactorService.CreateMovieActor(movieActor);
 

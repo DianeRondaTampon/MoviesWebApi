@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
@@ -101,6 +102,21 @@ namespace MoviesWebApi.Controllers
         }
 
 
+        // GET: api/Actors/actorsOfTheMovie
+        [HttpGet("actorsOfTheMovie")]
+        public ActionResult<List<ActorsMovieDto>> actorsOfTheMovie(string movieName)
+        {
+            List<ActorsMovieDto> actorsMovies  = _actorService.actorsOfTheMovie(movieName);
+            return Ok(actorsMovies);
+        }
+
+
         
+        
+
+
+
+
+
     }
 }

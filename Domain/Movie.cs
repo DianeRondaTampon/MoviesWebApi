@@ -16,7 +16,7 @@ namespace MoviesWebApi.Models
 
         public virtual Gender Gender { get;set; }
 
-
+        public virtual List<MovieActor> MovieActor { get; set; }
 
     }
 }

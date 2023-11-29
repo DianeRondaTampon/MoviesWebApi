@@ -1,18 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesWebApi.Controllers;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
+using NuGet.Protocol.Core.Types;
 using System.Diagnostics.Metrics;
+using System.IO;
 
 namespace MoviesWebApi.Application
 {
     public class ActorService
     {
         private readonly ActorRepository actorRepository;
+        private readonly MovieRepository movieRepository;
 
-        public ActorService(ActorRepository actorRepository)
+        public ActorService(ActorRepository actorRepository, MovieRepository movieRepository)
         {
             this.actorRepository = actorRepository;
+            this.movieRepository = movieRepository;
         }
 
         public List<Actor> GetAllActor()
@@ -31,19 +36,18 @@ namespace MoviesWebApi.Application
             return actor;
         }
 
-        private void AddActor(Actor actor)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool UpdateActor(int id, Actor actor)
         {
-            //check if the actor dont exist
-            if (actorRepository.GetActorById(id) == null)
-                return false;
+         
+            Actor getActor = actorRepository.GetActorById(id);
 
-            actor.Id = id;
-            actorRepository.UpdateActor(actor);
+            getActor.Id = actor.Id;
+            getActor.Name = actor.Name;
+
+            
+            actorRepository.UpdateActor(getActor);
             return true;
         }
 
@@ -74,6 +78,38 @@ namespace MoviesWebApi.Application
 
             return actors;
         }
+       
+        public List<ActorsMovieDto> actorsOfTheMovie (string movieName)
+        {
+            Movie movie = movieRepository.GetAllMovies().Where(m => m.Title == movieName).FirstOrDefault();
+            List<MovieActor> movieActors = movieRepository.GetAllMovies().Where(m => m.Title == movieName)
+                .SelectMany(m => m.MovieActor).ToList();
+
+            List<ActorsMovieDto> actorsMovieDto = new List<ActorsMovieDto>();
+
+            foreach (MovieActor movieActor in movieActors) 
+            {
+                
+                ActorsMovieDto actorMovieDto = new ActorsMovieDto()
+                {
+
+                    NameActor = movieActor.Actor.Name,
+                    MovieId = movie.Id,
+                    ActorId = movieActor.ActorId,
+                    Character = movieActor.Character,
+                    Title = movie.Title,
+                    Year = movie.Year,
+                    DirectorId = movie.DirectorId,
+                    GenderId = movie.GenderId
+                };
+                actorsMovieDto.Add(actorMovieDto);
+            }
+
+            return actorsMovieDto;
+        }
+
+
+
 
     }
 }

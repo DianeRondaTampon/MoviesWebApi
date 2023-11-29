@@ -30,10 +30,7 @@ namespace MoviesWebApi.Application
             return movie;
         }
 
-        private void AddMovie(Movie movie)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public bool UpdateMovie(int id, Movie movie)
         {
@@ -78,6 +75,32 @@ namespace MoviesWebApi.Application
 
             return result;
         }
+
+        public List<MovieGenderDto> getMoviesByGender(string nameGender)
+        {
+            List<Movie> movies = _repository.GetAllMovies().Where(m => m.Gender.Name == nameGender).ToList();
+
+
+            // Using Select to project Person objects to PersonDto objects
+            List<MovieGenderDto> moviesGenderDto = movies.Select(m => new MovieGenderDto
+            {
+                Id = m.Id,
+                Title = m.Title,
+                Year = m.Year,
+                IdGender = m.GenderId,
+                NameGender = m.Gender.Name
+
+
+            }).ToList();
+
+            return moviesGenderDto;
+        }
+
+
+
+
+
+
     }
 }
             

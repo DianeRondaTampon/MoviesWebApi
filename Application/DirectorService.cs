@@ -2,6 +2,7 @@
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace MoviesWebApi.Application
 {
@@ -50,13 +51,18 @@ namespace MoviesWebApi.Application
 
         public bool UpdateDirector(int id, Director director)
         {
-            if (_repository.GetDirectorById(id) == null)
-                return false;
+            //First GET the director from repository         
+            Director getDirector =_repository.GetDirectorById(id);
+            
+            //Second MODIFY the properties of the Director that you get
+            getDirector.Id =  director.Id;
+            getDirector.Name = director.Name;
 
-            director.Id = id;
-            _repository.UpdateDirector(director);
+            //Third UPDATE the director in the repository
+            _repository.UpdateDirector(getDirector);
             return true;
         }
+
 
         public bool DeleteDirector(int id)
         {

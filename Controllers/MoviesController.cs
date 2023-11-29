@@ -101,6 +101,17 @@ namespace MoviesWebApi.Controllers
         }
 
 
+        // GET: api/Actors/getMoviesByGender
+        [HttpGet("getMoviesByGender")]
+        public ActionResult<List<MovieGenderDto>> getMoviesByGender(string nameGender)
+        {
+            List<MovieGenderDto> moviesGender = _movieService.getMoviesByGender(nameGender);
+            return Ok(moviesGender);
+        }
+
+
+
+
 
 
 

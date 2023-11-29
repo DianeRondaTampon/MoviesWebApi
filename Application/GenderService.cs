@@ -28,10 +28,7 @@ namespace MoviesWebApi.Application
             return gender;
         }
 
-        private void AddGender(Gender gender)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool UpdateGender(int id, Gender gender)
         {

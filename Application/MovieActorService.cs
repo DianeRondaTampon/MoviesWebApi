@@ -1,4 +1,5 @@
-﻿using MoviesWebApi.Models;
+﻿using MoviesWebApi.Dto;
+using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 
 namespace MoviesWebApi.Application
@@ -22,16 +23,20 @@ namespace MoviesWebApi.Application
             return _repository.GetMovieActorById(id);
         }
 
-        public MovieActor CreateMovieActor(MovieActor movieActor)
+        public MovieActor CreateMovieActor(CreateMovieActorDto movieActorDto)
         {
+            MovieActor movieActor = new MovieActor()
+            {
+                ActorId = movieActorDto.ActorId,
+                MovieId = movieActorDto.MovieId,
+                Id = movieActorDto.Id,
+                Character = movieActorDto.Character
+            };
             _repository.AddMovieActor(movieActor);
             return movieActor;
         }
 
-        private void AddMovieActor(MovieActor movieActor)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool UpdateMovieActor(int id, MovieActor movieActor)
         {
