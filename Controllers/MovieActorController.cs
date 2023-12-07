@@ -24,17 +24,20 @@ namespace MoviesWebApi.Controllers
         }
 
         // GET: api/MovieActors
+       
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieActor>>> GetMovieActor()
+        public async Task<ActionResult<IEnumerable<MovieActorDto>>> GetAllMovieActors()
         {
-            return Ok(_movieactorService.GetAllMovieActor());
+            List<MovieActorDto> movieActors = _movieactorService.GetAllMovieActors();
+            return Ok(movieActors);
         }
 
         // GET: api/MovieActors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieActor>> GetMovieActor(int id)
+        public async Task<ActionResult<MovieActorDto>> GetMovieActor( int id)
         {
-            MovieActor movieactor = _movieactorService.GetMovieActorById(id);
+            MovieActorDto movieactor = _movieactorService.GetMovieActorById(id);
             if (movieactor == null)
             {
                 return NotFound();

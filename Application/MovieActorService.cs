@@ -1,6 +1,7 @@
 ﻿using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
+using System.Collections.Generic;
 
 namespace MoviesWebApi.Application
 {
@@ -13,14 +14,47 @@ namespace MoviesWebApi.Application
             _repository = repository;
         }
 
-        public List<MovieActor> GetAllMovieActor()
+        public List<MovieActorDto> GetAllMovieActors()
         {
-            return _repository.GetAllMovieActor();
+            
+            List<MovieActor> movieActors = _repository.GetAllMovieActor();
+            List<MovieActorDto> movieActorDtos = new List<MovieActorDto>();
+            foreach (MovieActor movieActor in movieActors)
+            {
+
+                MovieActorDto movieActorDto = new MovieActorDto()
+                {
+                    Id = movieActor.Id,
+                    MovieId = movieActor.MovieId,
+                    ActorId = movieActor.ActorId,
+                    Character = movieActor.Character,
+
+                };
+                movieActorDtos.Add(movieActorDto);
+            }
+            
+            return movieActorDtos;
         }
 
-        public MovieActor? GetMovieActorById(int id)
+        public MovieActorDto? GetMovieActorById(int id)
         {
-            return _repository.GetMovieActorById(id);
+            //the variable will have movieActor when it is found, when its not found the value be null
+            MovieActor? movieActor = _repository.GetMovieActorById(id);
+            MovieActorDto? movieActorDto = null;
+            if (movieActor != null )
+            {        
+                //movieActor is not null, is found
+                movieActorDto = new MovieActorDto()
+                {
+                    Id = movieActor.Id,
+                    MovieId = movieActor.MovieId,
+                    ActorId = movieActor.ActorId,
+                    Character = movieActor.Character,
+                };
+            }
+
+
+            return movieActorDto;
         }
 
         public MovieActor CreateMovieActor(CreateMovieActorDto movieActorDto)
