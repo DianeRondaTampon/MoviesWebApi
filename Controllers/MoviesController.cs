@@ -94,9 +94,9 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Actors/getMovieFromYear
         [HttpGet("getMovieFromYear")]
-        public ActionResult<List<MovieDto>> getMovieFromYear(int yearFrom, int yearUntil)
+        public ActionResult<List<GetMoviesFromYearDto>> getMovieFromYear(int yearFrom, int yearUntil)
         {
-            List <MovieDto> movies = _movieService.getMovieFromYear(yearFrom, yearUntil);
+            List <GetMoviesFromYearDto> movies = _movieService.getMovieFromYear(yearFrom, yearUntil);
             return Ok(movies);
         }
 

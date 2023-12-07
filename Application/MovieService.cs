@@ -52,16 +52,16 @@ namespace MoviesWebApi.Application
         }
 
 
-        public List<MovieDto> getMovieFromYear(int yearFrom, int yearUntil)
+        public List<GetMoviesFromYearDto> getMovieFromYear(int yearFrom, int yearUntil)
         {
             List<Movie> movies = _repository.GetAllMovies().Where(m => m.Year >= yearFrom && m.Year <= yearUntil).ToList();
 
-            List<MovieDto> result = new List<MovieDto>();
+            List<GetMoviesFromYearDto> result = new List<GetMoviesFromYearDto>();
 
 
             foreach (Movie movie in movies)
             {
-                MovieDto movieDto = new MovieDto()
+                GetMoviesFromYearDto movieDto = new GetMoviesFromYearDto()
                 {
                     Id = movie.Id,
                     Title = movie.Title,
