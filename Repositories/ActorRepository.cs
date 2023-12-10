@@ -24,10 +24,11 @@ namespace MoviesWebApi.Repositories
             return _context.Actor.Find(id);
         }
 
-        public void AddActor(Actor actor)
+        public Actor AddActor(Actor actor)
         {
             _context.Actor.Add(actor);
             _context.SaveChanges();
+            return actor;
         }
 
         public void UpdateActor(Actor actor)

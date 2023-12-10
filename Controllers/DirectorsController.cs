@@ -24,18 +24,20 @@ namespace MoviesWebApi.Controllers
             _directorService = directorservice;
         }
 
+
         // GET: api/Directors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Director>>> GetDirector()
+        public async Task<ActionResult<IEnumerable<DirectorDto>>> GetAllDirectors()
         {
-            return Ok(_directorService.GetAllDirector());
+            List<DirectorDto> directors = _directorService.GetAllDirectors();
+            return Ok(directors);
         }
 
         // GET: api/Directors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Director>> GetDirector(int id)
         {
-            Director director = _directorService.GetDirectorById(id);
+            DirectorDto? director = _directorService.GetDirectorById(id);
             if (director == null)
             {
                 return NotFound();
@@ -44,6 +46,16 @@ namespace MoviesWebApi.Controllers
             {
                 return Ok(director);
             }
+        }
+     
+        // POST: api/Directors                           
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<DirectorDto>> PostDirector(DirectorDto directorDto)
+        {
+            DirectorDto directorCreatedDto =  _directorService.CreateDirector(directorDto);
+
+            return Ok(directorCreatedDto);
         }
 
 
@@ -68,15 +80,6 @@ namespace MoviesWebApi.Controllers
             {
                 throw new Exception();
             }
-        }
-        // POST: api/Directors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Director>> PostDirector(Director director)
-        {
-            _directorService.CreateDirector(director);
-
-            return Ok(director);
         }
 
         // DELETE: api/Directors/5

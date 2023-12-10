@@ -1,4 +1,5 @@
-﻿using MoviesWebApi.Models;
+﻿using MoviesWebApi.Dto;
+using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 
 namespace MoviesWebApi.Application
@@ -12,11 +13,23 @@ namespace MoviesWebApi.Application
             _repository = repository;
         }
 
-        public List<Gender> GetAllGender()
+        public List<GenderDto> GetAllGenders()
         {
-            return _repository.GetAllGender();
+            List<Gender> genders = _repository.GetAllGender();
+            List<GenderDto> genderDtos = new List<GenderDto>();
+            foreach (Gender gender in genders)
+            {
+                GenderDto genderDto = new GenderDto()
+                {
+                    Id = gender.Id,
+                    Name = gender.Name,                    
+                };
+                genderDtos.Add(genderDto);
+            }
+            return genderDtos;
         }
 
+ 
         public Gender? GetGenderById(int id)
         {
             return _repository.GetGenderById(id);

@@ -16,6 +16,7 @@ namespace MoviesWebApi.Application
 
         public List<Movie> GetAllMovie()
         {
+
             return _repository.GetAllMovies().ToList();
         }
 

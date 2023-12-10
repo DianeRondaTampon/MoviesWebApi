@@ -45,6 +45,17 @@ namespace MoviesWebApi.Controllers
             }
         }
 
+        // POST: api/Movies
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        {
+            _movieService.CreateMovie(movie);
+
+            return Ok(movie);
+        }
+
+
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -67,15 +78,6 @@ namespace MoviesWebApi.Controllers
             }
         }
 
-        // POST: api/Movies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
-        {
-            _movieService.CreateMovie(movie);
-
-            return Ok(movie);
-        }
 
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]

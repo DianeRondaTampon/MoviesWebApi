@@ -26,16 +26,17 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Actors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetActor()
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetAllActors()
         {
-          return Ok( _actorService.GetAllActor());
+            List<ActorDto> actors = _actorService.GetAllActors();
+            return Ok(actors);
         }
 
         // GET: api/Actors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Actor>> GetActor(int id)
+        public async Task<ActionResult<ActorDto>> GetActor(int id)
         {
-            Actor actor = _actorService.GetActorById(id);
+            ActorDto actor = _actorService.GetActorById(id);
             if (actor == null)
             {
                 return NotFound();
@@ -46,38 +47,38 @@ namespace MoviesWebApi.Controllers
             }
         }
 
+        // POST: api/Actors
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<ActorDto>> PostActor(ActorDto actorDto)
+        {
+            ActorDto actordto =_actorService.CreateActor(actorDto);
+            return Ok(actordto);                            
+        }
+
+
         // PUT: api/Actors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActor(int id, Actor actor)
+        public async Task<IActionResult> PutActor(int id, ActorDto actorDto)
         {
-            if (id != actor.Id)
+            if (id != actorDto.Id)
             {
                 return BadRequest();
             }
 
 
-            bool success = _actorService.UpdateActor(id, actor);
+            bool success = _actorService.UpdateActor(id, actorDto);
             if (success)
             {
-                return Ok(actor);
+                return Ok(actorDto);
             }
             else
             {
-                throw new Exception();
+                return NotFound();
             }
         }
 
-        // POST: api/Actors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Actor>> PostActor(Actor actor)
-        {
-            _actorService.CreateActor(actor);
-
-            return Ok(actor);
-        }
-    
 
         // DELETE: api/Actors/5
         [HttpDelete("{id}")]

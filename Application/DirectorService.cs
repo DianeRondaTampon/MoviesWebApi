@@ -3,6 +3,7 @@ using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
+using System.Security.Cryptography.Xml;
 
 namespace MoviesWebApi.Application
 {
@@ -18,33 +19,83 @@ namespace MoviesWebApi.Application
             _movieRepository = movieRepository;
         }
 
-        public List<Director> GetAllDirector()
+        public List<DirectorDto> GetAllDirectors()
         {
-            return _repository.GetAllDirector();
+            List<Director> directors = _repository.GetAllDirectors();
+            List<DirectorDto> directorDtos = new List<DirectorDto>();
+
+            foreach (Director director in directors) 
+            {
+                DirectorDto directorDto = new DirectorDto()
+                {
+                    Id = director.Id,
+                    Name = director.Name
+                 
+                };
+                directorDtos.Add(directorDto);
+
+            }
+                return directorDtos;
         }
 
-        public Director? GetDirectorById(int id)
+
+        //this function will return a director or null if not found 
+
+
+
+        //first is that the variable DirectorDto need to initialize as null, then 
+
+
+        public DirectorDto? GetDirectorById(int id)
         {
-            //Director diane= _repository.GetDirectorById(id);
-            //bool isNULL = diane == null;
-            //bool isVeryNull = _repository.GetDirectorById(id) == null;
+            
+            Director? director = _repository.GetDirectorById(id);
 
-            //if(_repository.GetDirectorById(id)==null)
-            //{
-            //    //is null ->doesn't exist
-            //}
-            //else
-            //{
-            //    //is a director exist
-            //}
+            if (director != null)
+            {
+                //CASE A: director WILL HAVE A DIRECTOR
+                //Transform from Director to DirectorDto
+                //RETURN  DirectorDto 
 
-            return _repository.GetDirectorById(id);
+                //transform from Director to DirectorDto 
+                DirectorDto directorDto = new DirectorDto()
+                {
+                    //transform from Director to DirectorDto 
+
+                    Id = director.Id,
+                    Name = director.Name
+                };
+
+                return directorDto;
+            }
+            else
+            {
+                //CASE B: director WILL BE A NULL
+                //RETURN NULL
+
+                return null;
+            }
+        
         }
 
-        public Director CreateDirector(Director director)
+        public DirectorDto CreateDirector(DirectorDto directorDto)
         {
-            _repository.AddDirector(director);
-            return director;
+            //transform from DirectorDto to Director
+            Director director = new Director()
+            {
+                Id = directorDto.Id,
+                Name = directorDto.Name,
+            };
+           
+            Director directorCreated =_repository.AddDirector(director);
+            //transform from Director to DirectorDto 
+            DirectorDto directorCreatedDto = new DirectorDto()
+            {
+                Id = directorCreated.Id,
+                Name = directorCreated.Name,
+            };
+
+            return directorCreatedDto;
         }
 
        
@@ -53,7 +104,12 @@ namespace MoviesWebApi.Application
         {
             //First GET the director from repository         
             Director getDirector =_repository.GetDirectorById(id);
-            
+
+            if (getDirector == null)
+            {
+                return false;
+            }
+
             //Second MODIFY the properties of the Director that you get
             getDirector.Id =  director.Id;
             getDirector.Name = director.Name;

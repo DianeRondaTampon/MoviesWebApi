@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesWebApi;
 using MoviesWebApi.Application;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
@@ -25,10 +26,12 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Genders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Gender>>> GetGender()
+        public async Task<ActionResult<IEnumerable<GenderDto>>> GetAllGender()
         {
-            return Ok(_genderService.GetAllGender());
+            List<GenderDto> genders = _genderService.GetAllGenders();
+            return Ok(genders);
         }
+
 
         // GET: api/Genders/5
         [HttpGet("{id}")]
@@ -44,6 +47,16 @@ namespace MoviesWebApi.Controllers
                 return Ok(gender);
             }
         }
+        // POST: api/Genders
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Gender>> PostGender(Gender gender)
+        {
+            _genderService.CreateGender(gender);
+
+            return Ok(gender);
+        }
+
         // PUT: api/Genders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -64,15 +77,6 @@ namespace MoviesWebApi.Controllers
             {
                 throw new Exception();
             }
-        }
-        // POST: api/Genders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Gender>> PostGender(Gender gender)
-        {
-            _genderService.CreateGender(gender);
-
-            return Ok(gender);
         }
 
         // DELETE: api/Genders/5

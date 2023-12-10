@@ -20,34 +20,73 @@ namespace MoviesWebApi.Application
             this.movieRepository = movieRepository;
         }
 
-        public List<Actor> GetAllActor()
+        public List<ActorDto> GetAllActors()
         {
-            return actorRepository.GetAllActor();
+            List<Actor> actors = actorRepository.GetAllActor();
+            List<ActorDto> actorDtos = new List<ActorDto>();
+            foreach (Actor actor in actors) 
+            {
+                ActorDto actorDto = new ActorDto()
+                {
+                    Id = actor.Id,
+                    Name = actor.Name,
+                };
+                actorDtos.Add(actorDto);
+            }
+
+            return actorDtos;
         }
 
-        public Actor? GetActorById(int id)
+        public ActorDto? GetActorById(int id)
         {
-            return actorRepository.GetActorById(id);
+            Actor? actor = actorRepository.GetActorById(id);
+            ActorDto? actorDto = null;
+            if (actor != null)
+            {
+                actorDto = new ActorDto()
+                {
+                    Id = actor.Id,
+                    Name = actor.Name,
+                };
+            }
+
+            return actorDto;
         }
 
-        public Actor CreateActor(Actor actor)
+        public ActorDto CreateActor(ActorDto actorDto)
         {
-            actorRepository.AddActor(actor);
-            return actor;
+            Actor actor = new Actor()
+            {
+                Id = actorDto.Id,
+                Name = actorDto.Name,
+            };
+            Actor actorCreated = actorRepository.AddActor(actor);
+            ActorDto actorCreatedDto = new ActorDto()
+            {
+                Id = actorCreated.Id,
+                Name = actorCreated.Name
+            };
+
+            return actorCreatedDto;
         }
 
-        
 
-        public bool UpdateActor(int id, Actor actor)
+
+        public bool UpdateActor(int id, ActorDto actorDto)
         {
-         
+    
             Actor getActor = actorRepository.GetActorById(id);
 
-            getActor.Id = actor.Id;
-            getActor.Name = actor.Name;
+            if (getActor == null)
+            {
+                return false; 
+            }
 
-            
-            actorRepository.UpdateActor(getActor);
+            getActor.Id = actorDto.Id;
+            getActor.Name = actorDto.Name;
+
+            actorRepository.UpdateActor(getActor); 
+          
             return true;
         }
 
@@ -104,9 +143,6 @@ namespace MoviesWebApi.Application
 
             return actorsMovieDto;
         }
-
-
-
 
     }
 }

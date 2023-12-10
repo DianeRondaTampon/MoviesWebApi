@@ -24,8 +24,6 @@ namespace MoviesWebApi.Controllers
         }
 
         // GET: api/MovieActors
-       
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieActorDto>>> GetAllMovieActors()
         {
@@ -46,6 +44,16 @@ namespace MoviesWebApi.Controllers
             {
                 return Ok(movieactor);
             }
+        }
+
+        // POST: api/MovieActors
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<MovieActor>> PostMovieActor(CreateMovieActorDto movieActor)
+        {
+            _movieactorService.CreateMovieActor(movieActor);
+
+            return Ok(movieActor);
         }
 
         // PUT: api/MovieActors/5
@@ -70,15 +78,6 @@ namespace MoviesWebApi.Controllers
             }
         }
 
-        // POST: api/MovieActors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<MovieActor>> PostMovieActor(CreateMovieActorDto movieActor)
-        {
-            _movieactorService.CreateMovieActor(movieActor);
-
-            return Ok(movieActor);
-        }
 
         // DELETE: api/MovieActors/5
         [HttpDelete("{id}")]

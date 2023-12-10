@@ -14,7 +14,7 @@ namespace MoviesWebApi.Repositories
             _context = context;
         }
 
-        public List<Director> GetAllDirector()
+        public List<Director> GetAllDirectors()
         {
             return _context.Director.ToList();
         }
@@ -24,10 +24,11 @@ namespace MoviesWebApi.Repositories
             return _context.Director.Find(id);
         }
 
-        public void AddDirector(Director director)
+        public Director AddDirector(Director director)
         {
             _context.Director.Add(director);
             _context.SaveChanges();
+            return director;
         }
 
         public void UpdateDirector(Director director)
