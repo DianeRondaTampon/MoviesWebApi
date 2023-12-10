@@ -28,17 +28,45 @@ namespace MoviesWebApi.Application
             }
             return genderDtos;
         }
-
+         
  
-        public Gender? GetGenderById(int id)
+        public GenderDto? GetGenderById(int id)
         {
-            return _repository.GetGenderById(id);
+            Gender? gender = _repository.GetGenderById(id);
+            //is a gender and i need a gendrdto
+
+            if (gender != null)
+            {
+                GenderDto genderDto = new GenderDto()
+                {
+                    Id = gender.Id,
+                    Name = gender.Name,
+                };
+
+                return genderDto;
+            }
+            else
+            {
+                return null;
+            } 
         }
 
-        public Gender CreateGender(Gender gender)
+        public GenderDto CreateGender(GenderDto genderDto)
         {
-            _repository.AddGender(gender);
-            return gender;
+            Gender gender = new Gender()
+            {
+                Id = genderDto.Id,
+                Name = genderDto.Name,
+            };
+       
+            Gender genderCreated = _repository.AddGender(gender);
+            GenderDto genderCreatedDto = new GenderDto()
+            {
+                Id = genderCreated.Id,
+                Name = genderCreated.Name
+            };
+
+            return genderCreatedDto;
         }
 
         

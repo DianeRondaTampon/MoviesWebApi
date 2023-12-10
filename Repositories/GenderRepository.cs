@@ -24,10 +24,11 @@ namespace MoviesWebApi.Repositories
             return _context.Gender.Find(id);
         }
 
-        public void AddGender(Gender gender)
+        public Gender AddGender(Gender gender)
         {
             _context.Gender.Add(gender);
             _context.SaveChanges();
+            return gender;
         }
 
         public void UpdateGender(Gender gender)

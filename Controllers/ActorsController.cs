@@ -36,7 +36,7 @@ namespace MoviesWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ActorDto>> GetActor(int id)
         {
-            ActorDto actor = _actorService.GetActorById(id);
+            ActorDto? actor = _actorService.GetActorById(id);
             if (actor == null)
             {
                 return NotFound();
@@ -52,24 +52,23 @@ namespace MoviesWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ActorDto>> PostActor(ActorDto actorDto)
         {
-            ActorDto actordto =_actorService.CreateActor(actorDto);
-            return Ok(actordto);                            
+            ActorDto actorCreatedDto =_actorService.CreateActor(actorDto);
+            return Ok(actorCreatedDto);                            
         }
 
 
         // PUT: api/Actors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActor(int id, ActorDto actorDto)
+        public async Task<ActionResult<ActorDto>> PutActor(int id, ActorDto actorDto)
         {
             if (id != actorDto.Id)
             {
                 return BadRequest();
             }
 
-
             bool success = _actorService.UpdateActor(id, actorDto);
-            if (success)
+            if (_actorService.UpdateActor(id, actorDto))
             {
                 return Ok(actorDto);
             }
@@ -84,7 +83,7 @@ namespace MoviesWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActor(int id)
         {
-            if( _actorService.DeleteActor(id))
+            if (_actorService.DeleteActor(id))
             {
                 return Ok();
             }
@@ -96,7 +95,7 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Actors/generateActors
         [HttpGet("generateActors")]
-        public ActionResult<List<Actor>> generateActors(int number)
+        public ActionResult<List<Actor>> GenerateActors(int number)
         {
             List<Actor> actors = _actorService.generateActors(number);
             return Ok(actors);
@@ -105,7 +104,7 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Actors/actorsOfTheMovie
         [HttpGet("actorsOfTheMovie")]
-        public ActionResult<List<ActorsMovieDto>> actorsOfTheMovie(string movieName)
+        public ActionResult<List<ActorsMovieDto>> ActorsOfTheMovie(string movieName)
         {
             List<ActorsMovieDto> actorsMovies  = _actorService.actorsOfTheMovie(movieName);
             return Ok(actorsMovies);

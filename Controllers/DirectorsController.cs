@@ -62,23 +62,21 @@ namespace MoviesWebApi.Controllers
         // PUT: api/Directors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDirector(int id, Director director)
+        public async Task<IActionResult> PutDirector(int id, DirectorDto directorDto)
         {
-
-            if (id != director.Id)
+            if (id != directorDto.Id)
             {
                 return BadRequest();
             }
 
-
-            bool success = _directorService.UpdateDirector(id, director);
+            bool success = _directorService.UpdateDirector(id, directorDto);
             if (success)
             {
-                return Ok(director);
+                return Ok(directorDto);
             }
             else
             {
-                throw new Exception();
+                return NotFound();
             }
         }
 
@@ -95,9 +93,10 @@ namespace MoviesWebApi.Controllers
                 return NotFound();
             }
         }
+
         // GET: api/Directors/getMoviesFromDirector
         [HttpGet("getMoviesFromDirector")]
-        public ActionResult<List<MovieDirectorDto>> getMoviesFromDirector(string nameOfTheDirector)
+        public ActionResult<List<MovieDirectorDto>> GetMoviesFromDirector(string nameOfTheDirector)
         {
             List<MovieDirectorDto> result = _directorService.getMoviesFromDirector(nameOfTheDirector);
             return Ok(result);

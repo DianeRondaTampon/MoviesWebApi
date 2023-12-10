@@ -26,7 +26,7 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Genders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GenderDto>>> GetAllGender()
+        public async Task<ActionResult<IEnumerable<GenderDto>>> GetAllGenders()
         {
             List<GenderDto> genders = _genderService.GetAllGenders();
             return Ok(genders);
@@ -35,26 +35,27 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Genders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Gender>> GetGender(int id)
+        public async Task<ActionResult<GenderDto>> GetGender(int id)
         {
-            Gender gender = _genderService.GetGenderById(id);
-            if (gender == null)
+          
+            GenderDto genderDto = _genderService.GetGenderById(id);
+            if (genderDto == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(gender);
+                return Ok(genderDto);
             }
         }
         // POST: api/Genders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Gender>> PostGender(Gender gender)
+        public async Task<ActionResult<GenderDto>> PostGender(GenderDto genderDto)
         {
-            _genderService.CreateGender(gender);
+            GenderDto genderCreatedDto = _genderService.CreateGender(genderDto);
 
-            return Ok(gender);
+            return Ok(genderCreatedDto);
         }
 
         // PUT: api/Genders/5

@@ -100,7 +100,7 @@ namespace MoviesWebApi.Application
 
        
 
-        public bool UpdateDirector(int id, Director director)
+        public bool UpdateDirector(int id, DirectorDto directorDto)
         {
             //First GET the director from repository         
             Director getDirector =_repository.GetDirectorById(id);
@@ -111,8 +111,8 @@ namespace MoviesWebApi.Application
             }
 
             //Second MODIFY the properties of the Director that you get
-            getDirector.Id =  director.Id;
-            getDirector.Name = director.Name;
+            getDirector.Id =  directorDto.Id;
+            getDirector.Name = directorDto.Name;
 
             //Third UPDATE the director in the repository
             _repository.UpdateDirector(getDirector);
@@ -146,7 +146,6 @@ namespace MoviesWebApi.Application
             //transverse all the movies of the list
 
             foreach (Movie movie in movies)
-
             {
                 //add element to the list ,way1:
                 movieDirectorDto.Add(new MovieDirectorDto
