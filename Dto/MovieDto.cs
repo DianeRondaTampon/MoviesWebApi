@@ -11,6 +11,9 @@ namespace MoviesWebApi.Models
         public int? DirectorId { get; set; }
         public int? GenderId { get; set; }
 
+        //constructor
+        public MovieDto() { 
+        }
 
     }
 }

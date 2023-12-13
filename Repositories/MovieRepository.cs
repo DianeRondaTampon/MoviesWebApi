@@ -25,10 +25,11 @@ namespace MoviesWebApi.Repositories
             return _context.Movie.Find(id);
         }
 
-        public void AddMovie(Movie movie)
+        public Movie AddMovie(Movie movie)
         {
             _context.Movie.Add(movie);
             _context.SaveChanges();
+            return movie;
         }
 
         public void UpdateMovie(Movie movie)

@@ -1,7 +1,9 @@
 ﻿using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
+using NuGet.Packaging.Signing;
 using NuGet.Protocol.Core.Types;
+using System.IO;
 
 namespace MoviesWebApi.Application
 {
@@ -14,32 +16,100 @@ namespace MoviesWebApi.Application
             _repository = repository;
         }
 
-        public List<Movie> GetAllMovie()
+        public List<MovieDto> GetAllMovies()
         {
+            List<MovieDto> result = new List<MovieDto>();
 
-            return _repository.GetAllMovies().ToList();
+            List<Movie> movies = _repository.GetAllMovies().ToList();
+
+            foreach (Movie movie in movies)
+            {
+
+                MovieDto movieDto = new MovieDto()
+                {
+
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year,
+                    DirectorId = movie.DirectorId,
+                    GenderId = movie.GenderId
+
+                };
+                result.Add(movieDto);
+            }
+            return result;
         }
 
-        public Movie? GetMovieById(int id)
+        public MovieDto? GetMovieById(int id)
         {
-            return _repository.GetMovieById(id);
+
+            Movie? movie = _repository.GetMovieById(id);
+            if (movie == null)
+            {
+                return null;
+            }
+            else
+            {
+                MovieDto movieDto = new MovieDto()
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year,
+                    DirectorId = movie.DirectorId,
+                    GenderId = movie.GenderId
+                };
+                return movieDto;
+            }
+
+
         }
 
-        public Movie CreateMovie(Movie movie)
+        public MovieDto CreateMovie(MovieDto movieDto)
         {
-            _repository.AddMovie(movie);
-            return movie;
+            //I have a DTO and I need a MOVIE
+            Movie movie = new Movie()
+            {
+
+                Id = movieDto.Id,
+                Title = movieDto.Title,
+                Year = movieDto.Year,
+                DirectorId = movieDto.DirectorId,
+                GenderId = movieDto.GenderId
+
+            };
+            Movie movieCreated = _repository.AddMovie(movie);
+            //i have  movieCreated i need movieDtoCreated
+            MovieDto movieDtoCreated = new MovieDto()
+            {
+
+                Id = movieCreated.Id,
+                Title = movieCreated.Title,
+                Year = movieCreated.Year,
+                DirectorId = movieCreated.DirectorId,
+                GenderId = movieCreated.GenderId
+            };
+
+            return movieDtoCreated;
         }
 
-       
-
-        public bool UpdateMovie(int id, Movie movie)
+        public bool UpdateMovie(int id, MovieDto movieDto)
         {
-            if (_repository.GetMovieById(id) == null)
+            Movie? getMovie = _repository.GetMovieById(id);
+
+            if (getMovie == null) 
+            {
+                // It is not found the id of movie do not exist 
                 return false;
+            }
 
-            movie.Id = id;
-            _repository.UpdateMovie(movie);
+            getMovie.Id = movieDto.Id;
+            getMovie.Title = movieDto.Title;
+            getMovie.Year = movieDto.Year;
+            getMovie.DirectorId = movieDto.DirectorId;
+            getMovie.GenderId = movieDto.GenderId;
+
+            _repository.UpdateMovie(getMovie);
+
             return true;
         }
 

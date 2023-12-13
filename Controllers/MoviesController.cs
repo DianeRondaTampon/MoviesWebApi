@@ -9,6 +9,7 @@ using MoviesWebApi;
 using MoviesWebApi.Application;
 using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
+using NuGet.Protocol.Plugins;
 
 namespace MoviesWebApi.Controllers
 {
@@ -25,16 +26,16 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
-        {
-            return Ok(_movieService.GetAllMovie());
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetAllMovies()
+        {          
+                return Ok(_movieService.GetAllMovies());
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovie(int id)
+        public async Task<ActionResult<MovieDto>> GetMovie(int id)
         {
-            Movie movie = _movieService.GetMovieById(id);
+            MovieDto? movie = _movieService.GetMovieById(id);
             if (movie == null)
             {
                 return NotFound();
@@ -48,33 +49,32 @@ namespace MoviesWebApi.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        public async Task<ActionResult<MovieDto>> PostMovie(MovieDto movieDto)
         {
-            _movieService.CreateMovie(movie);
+            MovieDto movieDtoCreated = _movieService.CreateMovie(movieDto);
 
-            return Ok(movie);
+            return Ok(movieDtoCreated);
         }
 
 
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, Movie movie)
+        public async Task<ActionResult<MovieDto>> PutMovie(int id, MovieDto movieDto)
         {
-            if (id != movie.Id)
+            if (id != movieDto.Id)
             {
                 return BadRequest();
             }
 
-
-            bool success = _movieService.UpdateMovie(id, movie);
+            bool success = _movieService.UpdateMovie(id, movieDto);
             if (success)
             {
-                return Ok(movie);
+                return Ok(movieDto);
             }
             else
             {
-                throw new Exception();
+                return NotFound();
             }
         }
 

@@ -35,14 +35,14 @@ namespace MoviesWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieActorDto>> GetMovieActor( int id)
         {
-            MovieActorDto movieactor = _movieactorService.GetMovieActorById(id);
-            if (movieactor == null)
+            MovieActorDto movieActor = _movieactorService.GetMovieActorById(id);
+            if (movieActor == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(movieactor);
+                return Ok(movieActor);
             }
         }
 
