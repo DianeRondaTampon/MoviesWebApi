@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Identity.Client;
 using MoviesWebApi.Dto;
@@ -210,7 +211,7 @@ namespace MoviesWebApi.Application
             if (hour >= 24)
             {
                 result = null; ;//input param is wrong, so we return null
-               
+
             }
             else
             {
@@ -349,7 +350,7 @@ namespace MoviesWebApi.Application
             int inputLength = inputString.Length;
             int substringLenght = substring.Length;
 
-            for (int i = 0; i <= inputLength - substringLenght;i++)
+            for (int i = 0; i <= inputLength - substringLenght; i++)
             {
                 //get the first part of the comparison, from the inputString, for example: "my"
                 //the second part of the comparison, substring , "is"
@@ -359,24 +360,58 @@ namespace MoviesWebApi.Application
                 {
 
                     //i will return the position because substring is found
-                    result = i ;
+                    result = i;
 
                 }
                 else
                 {
-                   //return not found
-                   
+                    //return not found
+
                 }
             }
 
             //i will return the position i where i found it or null
             return result;
-                
+
         }
 
-    
+        public Actor? GetActorById(int id, List<Actor> listActors)
+        {
+            foreach (Actor actor in listActors)
+            {
+                if (actor.Id == id)
+                    return actor;
+            }
 
+            return null;
+        }
 
+        public int? GetMinimumYearMovie(List<MovieDto> listMovies)
+        {
+            //I will find the smallest
+            int? minimumYearMovie = int.MaxValue;
+
+            foreach (MovieDto movie in listMovies)
+            {
+                //I will compare all the elements of the list  of Movies so I can to fimd the smallest
+                if (movie.Year < minimumYearMovie )
+                {
+                    minimumYearMovie = movie.Year;
+                }
+            }
+            //if the minimumyears was not found return null 
+            if (minimumYearMovie == int.MaxValue)
+            { 
+                return null; 
+            }
+            else
+            {
+                return minimumYearMovie;
+            }
+            
+        }
+
+       
 
 
     }

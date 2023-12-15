@@ -4,6 +4,7 @@ using MoviesWebApi.Application;
 using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -164,6 +165,40 @@ namespace MoviesWebApi.Controllers
             return Ok(_calculationService.findSubstring(substring, inputString));
         }
 
+        // GET: api/Calculation/GetActorById
+        [HttpPost("GetActorById")]
+        public ActionResult<Actor?> GetActorById(int id, [FromBody] List <Actor> actors)
+        {
+
+            Actor? actor =  _calculationService.GetActorById(id, actors);
+            if (actor != null) 
+            {
+                return Ok(actor);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // GET: api/Calculation/GetMinimumYearMovie
+        [HttpPost("GetMinimumYearMovie")]
+        public ActionResult<int?> GetMinimumYearMovie(List<MovieDto> movies)
+        {
+            int? minimumYear = _calculationService.GetMinimumYearMovie(movies);
+
+            if (minimumYear != null)
+            { 
+                return Ok(minimumYear); 
+            }
+            else 
+            { 
+                return NotFound(); 
+            } 
+
+
+
+        }
 
     }
 }
