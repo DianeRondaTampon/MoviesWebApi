@@ -17,7 +17,7 @@ namespace MoviesWebApi.Application
         public List<MovieActorDto> GetAllMovieActors()
         {
             
-            List<MovieActor> movieActors = _repository.GetAllMovieActor();
+            List<MovieActor> movieActors = _repository.GetAllMovieActors();
             List<MovieActorDto> movieActorDtos = new List<MovieActorDto>();
             foreach (MovieActor movieActor in movieActors)
             {
@@ -57,7 +57,7 @@ namespace MoviesWebApi.Application
             return movieActorDto;
         }
 
-        public MovieActor CreateMovieActor(CreateMovieActorDto movieActorDto)
+        public MovieActorDto CreateMovieActor(MovieActorDto movieActorDto)
         {
             MovieActor movieActor = new MovieActor()
             {
@@ -66,20 +66,41 @@ namespace MoviesWebApi.Application
                 Id = movieActorDto.Id,
                 Character = movieActorDto.Character
             };
-            _repository.AddMovieActor(movieActor);
-            return movieActor;
+
+            MovieActor movieActorCreated = _repository.AddMovieActor(movieActor);
+            MovieActorDto movieActorDtoCreated = new MovieActorDto()
+            {
+                ActorId = movieActorCreated.ActorId,
+                MovieId = movieActorCreated.MovieId,
+                Id = movieActorCreated.Id,
+                Character = movieActorCreated.Character,
+            };         
+            return movieActorDtoCreated;
         }
 
         
 
-        public bool UpdateMovieActor(int id, MovieActor movieActor)
+        public bool UpdateMovieActor(int id, MovieActorDto movieActorDto)
         {
-            if (_repository.GetMovieActorById(id) == null)
+        
+            MovieActor? getMovieActor = _repository.GetMovieActorById(id);
+            if (getMovieActor == null)
+            {
                 return false;
+            }
+            else
+            {
+                //update
 
-            movieActor.Id = id;
-            _repository.UpdateMovie(movieActor);
-            return true;
+                getMovieActor.ActorId = movieActorDto.ActorId;
+                getMovieActor.MovieId = movieActorDto.MovieId;
+                getMovieActor.Id = movieActorDto.Id;
+                getMovieActor.Character = movieActorDto.Character;
+
+                _repository.UpdateMovieActor(getMovieActor);
+
+                return true;
+            }
         }
 
         public bool DeleteMovieActor(int id)

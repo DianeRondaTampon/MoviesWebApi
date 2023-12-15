@@ -13,7 +13,7 @@ namespace MoviesWebApi.Repositories
             _context = context;
         }
 
-        public List<MovieActor> GetAllMovieActor()
+        public List<MovieActor> GetAllMovieActors()
         {
             return _context.MovieActor.ToList();
         }
@@ -23,13 +23,14 @@ namespace MoviesWebApi.Repositories
             return _context.MovieActor.Find(id);
         }
 
-        public void AddMovieActor(MovieActor movieActor)
+        public MovieActor AddMovieActor(MovieActor movieActor)
         {
             _context.MovieActor.Add(movieActor);
             _context.SaveChanges();
+            return movieActor;
         }
 
-        public void UpdateMovie(MovieActor movie)
+        public void UpdateMovieActor(MovieActor movie)
         {
             _context.Entry(movie).State = EntityState.Modified;
             _context.SaveChanges();

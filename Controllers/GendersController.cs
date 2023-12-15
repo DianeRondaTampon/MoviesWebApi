@@ -61,18 +61,17 @@ namespace MoviesWebApi.Controllers
         // PUT: api/Genders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGender(int id, Gender gender)
+        public async Task<ActionResult<GenderDto>> PutGender(int id, GenderDto genderDto)
         {
-            if (id != gender.Id)
+            if (id != genderDto.Id)
             {
                 return BadRequest();
             }
 
-
-            bool success = _genderService.UpdateGender(id, gender);
+            bool success = _genderService.UpdateGender(id, genderDto);
             if (success)
             {
-                return Ok(gender);
+                return Ok(genderDto);
             }
             else
             {

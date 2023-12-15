@@ -28,6 +28,7 @@ namespace MoviesWebApi.Controllers
 
             return Ok(sum);
         }
+
         // GET: api/Calculation/factorialOfAGiveNumber
         [HttpGet("factorialOfAGiveNumber")]
         public ActionResult<int> factorialOfAGiveNumber(int factorial)
@@ -36,6 +37,7 @@ namespace MoviesWebApi.Controllers
 
             return Ok(multiply);
         }
+
         // GET: api/Calculation/repeatStrings
         [HttpGet("repeatStrings")]
         public ActionResult<int> repeatStrings(int number, string text)
@@ -44,8 +46,6 @@ namespace MoviesWebApi.Controllers
 
             return Ok(result);
         }
-
-
 
         // GET: api/Calculation/sumTwoNumbers
         [HttpGet("sumTwoNumbers")]

@@ -69,16 +69,30 @@ namespace MoviesWebApi.Application
             return genderCreatedDto;
         }
 
-        
+        //this function will return true if succesful,false if it is not success
+        //input parameter id is the identifier of the gender that will be updated
+        //input parameter dto is the info of the gender that will update the existing info of the gender
+        //-> dto input param is the new content
+        public bool UpdateGender(int id, GenderDto genderDto)
+        {      
 
-        public bool UpdateGender(int id, Gender gender)
-        {
-            if (_repository.GetGenderById(id) == null)
+            //find the gender by id
+            Gender? getGender = _repository.GetGenderById(id);
+            if (getGender == null)
+            {
                 return false;
+            }
+            else
+            {
+                //the info of the dto will overwrite the info of the getGender that is                             found
+                getGender.Id = genderDto.Id;
+                getGender.Name = genderDto.Name;
+                    
 
-            gender.Id = id;
-            _repository.AddGender(gender);
-            return true;
+                _repository.UpdateGender(getGender);
+   
+                return true;
+            }
         }
 
         public bool DeleteGender(int id)

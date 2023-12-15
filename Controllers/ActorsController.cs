@@ -26,7 +26,7 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Actors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> GetAllActors()
+        public async Task<ActionResult<List<ActorDto>>> GetAllActors()
         {
             List<ActorDto> actors = _actorService.GetAllActors();
             return Ok(actors);

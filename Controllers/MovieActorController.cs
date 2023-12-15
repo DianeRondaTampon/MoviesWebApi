@@ -16,26 +16,26 @@ namespace MoviesWebApi.Controllers
     [ApiController]
     public class MovieActorController : ControllerBase
     {
-        private readonly MovieActorService _movieactorService;
+        private readonly MovieActorService _movieActorService;
 
         public MovieActorController(MovieActorService movieActorservice)
         {
-            _movieactorService = movieActorservice;
+            _movieActorService = movieActorservice;
         }
 
         // GET: api/MovieActors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieActorDto>>> GetAllMovieActors()
+        public async Task<ActionResult<List<MovieActorDto>>> GetAllMovieActors()
         {
-            List<MovieActorDto> movieActors = _movieactorService.GetAllMovieActors();
+            List<MovieActorDto> movieActors = _movieActorService.GetAllMovieActors();
             return Ok(movieActors);
         }
 
         // GET: api/MovieActors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieActorDto>> GetMovieActor( int id)
+        public async Task<ActionResult<MovieActorDto>> GetMovieActor(int id)
         {
-            MovieActorDto movieActor = _movieactorService.GetMovieActorById(id);
+            MovieActorDto? movieActor = _movieActorService.GetMovieActorById(id);
             if (movieActor == null)
             {
                 return NotFound();
@@ -49,32 +49,34 @@ namespace MoviesWebApi.Controllers
         // POST: api/MovieActors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MovieActor>> PostMovieActor(CreateMovieActorDto movieActor)
+        public async Task<ActionResult<MovieActorDto>> PostMovieActor(MovieActorDto movieActorDto)
         {
-            _movieactorService.CreateMovieActor(movieActor);
 
-            return Ok(movieActor);
+            MovieActorDto createdMovieActorDto = _movieActorService.CreateMovieActor(movieActorDto);
+
+            return Ok(createdMovieActorDto);
         }
 
         // PUT: api/MovieActors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovieActor(int id, MovieActor movieActor)
+        public async Task<ActionResult<MovieActor>> PutMovieActor(int id, MovieActorDto movieActorDto)
         {
-            if (id != movieActor.Id)
+            if (id != movieActorDto.Id)
             {
+                //throw new Exception("The id to be updated is not the same as the id of the object to be updated");
                 return BadRequest();
             }
 
-
-            bool success = _movieactorService.UpdateMovieActor(id, movieActor);
+            bool success = _movieActorService.UpdateMovieActor(id, movieActorDto);
             if (success)
             {
-                return Ok(movieActor);
+                return Ok(movieActorDto);
             }
             else
             {
-                throw new Exception();
+                //the id doesnt exist, not found
+                return NotFound();
             }
         }
 
@@ -83,7 +85,7 @@ namespace MoviesWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovieActor(int id)
         {
-            if (_movieactorService.DeleteMovieActor(id))
+            if (_movieActorService.DeleteMovieActor(id))
             {
                 return Ok();
             }

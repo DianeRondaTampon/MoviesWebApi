@@ -23,7 +23,17 @@ namespace MoviesWebApi.Application
 
         public int sumOfTheNumberLessThan(int givenNumber)
         {
+            int result;
             int sum = 0;
+            if (sum == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                result = 5 / sum;
+            }
+
             for (int i = 1; i < givenNumber; i++)
             {
                 sum = sum + i;
