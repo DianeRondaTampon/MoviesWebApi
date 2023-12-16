@@ -397,22 +397,37 @@ namespace MoviesWebApi.Application
                 if (movie.Year < minimumYearMovie )
                 {
                     minimumYearMovie = movie.Year;
+
                 }
             }
+
+            int? result = minimumYearMovie;
+           
             //if the minimumyears was not found return null 
             if (minimumYearMovie == int.MaxValue)
-            { 
-                return null; 
-            }
-            else
             {
-                return minimumYearMovie;
+                // minimum not found 
+                result = null;
             }
-            
+            return result;
         }
 
-       
+        public int? GetMinimumYearMovieMin(List<MovieDto> listMovies)
+        {
+            int? minimum = listMovies.Min(movie => movie.Year);
+            return minimum;
+        }
 
+        public int GetDirectorsQuantity ( List<Director> listDirectors)
+        {
+            int quantity = 0;
+
+            foreach(Director director in listDirectors)
+            {
+               quantity++;          
+            }
+            return quantity;
+        }
 
     }
 }

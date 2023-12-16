@@ -145,7 +145,7 @@ namespace MoviesWebApi.Controllers
         [HttpGet("ListOfNumbersOrdered")]
         public ActionResult<List<int>> ListOfNumbersOrdered([FromQuery] List<int> list)
         {
-            List<int> listOrdered =_calculationService.ListOfNumbersOrdered(list);
+            List<int> listOrdered = _calculationService.ListOfNumbersOrdered(list);
             return Ok(listOrdered);
         }
 
@@ -154,7 +154,7 @@ namespace MoviesWebApi.Controllers
         [HttpGet("ListOfString")]
         public ActionResult<List<string>> ListOfString([FromQuery] List<string> strings)
         {
-             return Ok(strings);
+            return Ok(strings);
         }
 
 
@@ -167,11 +167,11 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Calculation/GetActorById
         [HttpPost("GetActorById")]
-        public ActionResult<Actor?> GetActorById(int id, [FromBody] List <Actor> actors)
+        public ActionResult<Actor?> GetActorById(int id, [FromBody] List<Actor> actors)
         {
 
-            Actor? actor =  _calculationService.GetActorById(id, actors);
-            if (actor != null) 
+            Actor? actor = _calculationService.GetActorById(id, actors);
+            if (actor != null)
             {
                 return Ok(actor);
             }
@@ -188,17 +188,42 @@ namespace MoviesWebApi.Controllers
             int? minimumYear = _calculationService.GetMinimumYearMovie(movies);
 
             if (minimumYear != null)
-            { 
-                return Ok(minimumYear); 
+            {
+                return Ok(minimumYear);
             }
-            else 
-            { 
-                return NotFound(); 
-            } 
-
-
-
+            else
+            {
+                return NotFound();
+            }
         }
+
+        // GET: api/Calculation/GetMinimumYearMovieMin
+        [HttpPost("GetMinimumYearMovieMin")]
+        public ActionResult<int?> GetMinimumYearMovieMin(List<MovieDto> movies)
+        {
+            int? minimumYear = _calculationService.GetMinimumYearMovieMin(movies);
+
+            if (minimumYear != null)
+            {
+                return Ok(minimumYear);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
+        // GET: api/Calculation/GetDirectorsQuantity
+        [HttpPost("GetDirectorsQuantity")]
+        public ActionResult<int> GetDirectorsQuantity(List<Director> directors)
+        {
+            int quantityDirector = _calculationService.GetDirectorsQuantity(directors);
+   
+            return Ok(quantityDirector);
+            
+        }
+
 
     }
 }
