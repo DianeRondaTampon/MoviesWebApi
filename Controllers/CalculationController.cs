@@ -213,7 +213,6 @@ namespace MoviesWebApi.Controllers
             }
         }
 
-
         // GET: api/Calculation/GetDirectorsQuantity
         [HttpPost("GetDirectorsQuantity")]
         public ActionResult<int> GetDirectorsQuantity(List<Director> directors)
@@ -222,6 +221,34 @@ namespace MoviesWebApi.Controllers
    
             return Ok(quantityDirector);
             
+        }
+
+        // GET: api/Calculation/GetIntegersDouble
+        [HttpPost("GetIntegersDouble")]
+        public ActionResult<List<int>> GetIntegersDouble(List<int> integers)
+        {
+            List<int> integersDouble = _calculationService.GetIntegersDouble(integers);
+
+            return Ok(integersDouble);
+
+        }
+
+        // GET: api/Calculation/GetTotalRepositories
+        [HttpGet("GetTotalRepositories")]
+        public ActionResult<GetTotalRepositoriesDto> GetTotalRepositories()
+        {
+            GetTotalRepositoriesDto totalrepositories = _calculationService.GetTotalRepositories();
+             
+            return Ok(totalrepositories);
+        }
+
+        // GET: api/Calculation/GenerateCars
+        [HttpGet("GenerateCars")]
+        public ActionResult<Car> GenerateCars()
+        {
+            Car car = _calculationService.GenerateCars();
+
+            return Ok(car);
         }
 
 

@@ -7,6 +7,7 @@ using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using NuGet.Packaging.Signing;
+using NuGet.Protocol.Core.Types;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -16,6 +17,25 @@ namespace MoviesWebApi.Application
 {
     public class CalculationService
     {
+        private readonly ActorRepository _actorRepository;
+        private readonly DirectorRepository _directorRepository;
+        private readonly GenderRepository _genderRepository;
+        private readonly MovieActorRepository _movieActorRepository;
+        private readonly MovieRepository _movieRepository;
+
+        //this is a constructor
+        public CalculationService(ActorRepository actorRepository, DirectorRepository directorRepository, 
+            GenderRepository genderRepository, MovieActorRepository movieActorRepository, MovieRepository movieRepository)
+        {
+            this._actorRepository = actorRepository;
+            this._directorRepository = directorRepository;
+            this._genderRepository = genderRepository;
+            this._movieActorRepository = movieActorRepository;
+            this._movieRepository = movieRepository;
+
+        }
+
+
         //(int i=0; 2<;i++)
         public int sumTwoNumbers(int number1, int number2)
         {
@@ -427,6 +447,64 @@ namespace MoviesWebApi.Application
                quantity++;          
             }
             return quantity;
+        }
+
+        public List<int> GetIntegersDouble(List<int> listIntegers)
+        {
+
+            List<int> integersDouble = new List<int>();
+
+            foreach (int integer in listIntegers)
+            {
+                integersDouble.Add(integer * 2);
+            }
+            return integersDouble;
+
+        }
+
+        public GetTotalRepositoriesDto GetTotalRepositories()
+        {
+            
+
+            int totalActors = _actorRepository.GetAllActor().Count;
+            int totalDirectors = _directorRepository.GetAllDirectors().Count;
+            int totalGenders = _genderRepository.GetAllGender().Count;
+            int totalMovies = _movieRepository.GetAllMovies().ToList().Count;
+            int totalMoviesActor = _movieActorRepository.GetAllMovieActors().Count;
+
+
+            GetTotalRepositoriesDto GetTotalRepositoriesDto = new GetTotalRepositoriesDto()
+            {
+                TotalActors = totalActors,
+                TotalDirectors = totalDirectors,
+                TotalGenders = totalGenders,
+                TotalMovies = totalMovies,
+                TotalMoviesActor = totalMoviesActor
+
+            };
+            return GetTotalRepositoriesDto;         
+        }
+
+        public Car GenerateCars()
+        {
+            int id = 1; 
+            string name = "name"; 
+            string brand = "brand"; 
+            decimal speed = 10; 
+            string color ="yellow";
+            Car car = new Car(id, name, brand, speed, color);
+
+            int quantityOfElementsList = car.List.Count;
+
+            Car car2 = new Car(id, name, brand, speed, color);
+
+            Car car3 = new Car(id, name, brand, speed, color);
+            foreach(int element in car3.List)
+            {
+                //do something
+            }
+
+            return car;
         }
 
     }

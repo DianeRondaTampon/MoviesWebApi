@@ -1,4 +1,6 @@
-﻿namespace MoviesWebApi.Dto
+﻿using System.Drawing;
+
+namespace MoviesWebApi.Dto
 {
     public class Car
     {
@@ -17,6 +19,17 @@
             Name = "Car of Juan Carlos";
             Brand = "SEAT";
             Speed = 0;
+            Color = color;
+            List = new List<int>(); //initialize the properties of the class in the constructor
+        }
+
+
+        public Car(int id, string name, string brand, decimal speed, string color)
+        {
+            Id = id;
+            Name = name;
+            Brand = brand;
+            Speed = speed;
             Color = color;
             List = new List<int>(); //initialize the properties of the class in the constructor
         }
