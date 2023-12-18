@@ -14,10 +14,13 @@ namespace MoviesWebApi.Application
         private readonly ActorRepository actorRepository;
         private readonly MovieRepository movieRepository;
 
+
+
         public ActorService(ActorRepository actorRepository, MovieRepository movieRepository)
         {
             this.actorRepository = actorRepository;
             this.movieRepository = movieRepository;
+
         }
 
         public List<ActorDto> GetAllActors()
@@ -143,6 +146,9 @@ namespace MoviesWebApi.Application
 
             return actorsMovieDto;
         }
+
+
+
 
     }
 }

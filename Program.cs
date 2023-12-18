@@ -29,6 +29,7 @@ namespace MoviesWebApi
             builder.Services.AddScoped<MovieRepository>();
             // Add other repositories if needed
 
+
             // Add Services
             builder.Services.AddScoped<ActorService>();
             builder.Services.AddScoped<CalculationService>();
@@ -36,6 +37,8 @@ namespace MoviesWebApi
             builder.Services.AddScoped<GenderService>();
             builder.Services.AddScoped<MovieActorService>();
             builder.Services.AddScoped<MovieService>();
+            builder.Services.AddScoped<GetActorById.GetActorByIdHandler>();
+            builder.Services.AddScoped<GetAllActors.GetAllActorsHandler>();
             // Add other services if needed
 
 
