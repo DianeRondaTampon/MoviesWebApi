@@ -1,14 +1,17 @@
 ﻿using MoviesWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
+using System.Configuration;
 
 namespace MoviesWebApi
 {
     public class MovieDbContext : DbContext
     {
-        public MovieDbContext(DbContextOptions<MovieDbContext> options) : base(options) { }
-
-
+        private readonly IConfiguration _configuration;
+        public MovieDbContext(DbContextOptions<MovieDbContext> options, IConfiguration configuration) : base(options) 
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<Actor> Actor { get; set; }
         public DbSet<Director> Director { get; set; }
@@ -26,15 +29,10 @@ namespace MoviesWebApi
 
 
                 // Replace "YourServer", "YourDatabase", "YourUsername", and "YourPassword" with your actual database details
-                optionsBuilder.UseSqlServer("Server=DESKTOP-9998B8S\\SQLEXPRESS;Database=Movies;User Id=userMovie;Password=userMovie;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MoviesDatabase"));
 
-                
             }
-
-
         }
-
-
-        
+       
     }
 }
