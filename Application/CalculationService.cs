@@ -6,9 +6,11 @@ using Microsoft.Identity.Client;
 using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
+using Newtonsoft.Json.Linq;
 using NuGet.Packaging.Signing;
 using NuGet.Protocol.Core.Types;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing.Printing;
@@ -22,16 +24,19 @@ namespace MoviesWebApi.Application
         private readonly GenderRepository _genderRepository;
         private readonly MovieActorRepository _movieActorRepository;
         private readonly MovieRepository _movieRepository;
+        private readonly IConfiguration _configuration;
 
         //this is a constructor
-        public CalculationService(ActorRepository actorRepository, DirectorRepository directorRepository, 
-            GenderRepository genderRepository, MovieActorRepository movieActorRepository, MovieRepository movieRepository)
+        public CalculationService(ActorRepository actorRepository, DirectorRepository directorRepository,
+            GenderRepository genderRepository, MovieActorRepository movieActorRepository, MovieRepository movieRepository,
+            IConfiguration configuration)
         {
             this._actorRepository = actorRepository;
             this._directorRepository = directorRepository;
             this._genderRepository = genderRepository;
             this._movieActorRepository = movieActorRepository;
             this._movieRepository = movieRepository;
+            this._configuration = configuration;
 
         }
 
@@ -414,7 +419,7 @@ namespace MoviesWebApi.Application
             foreach (MovieDto movie in listMovies)
             {
                 //I will compare all the elements of the list  of Movies so I can to fimd the smallest
-                if (movie.Year < minimumYearMovie )
+                if (movie.Year < minimumYearMovie)
                 {
                     minimumYearMovie = movie.Year;
 
@@ -422,7 +427,7 @@ namespace MoviesWebApi.Application
             }
 
             int? result = minimumYearMovie;
-           
+
             //if the minimumyears was not found return null 
             if (minimumYearMovie == int.MaxValue)
             {
@@ -438,13 +443,13 @@ namespace MoviesWebApi.Application
             return minimum;
         }
 
-        public int GetDirectorsQuantity ( List<Director> listDirectors)
+        public int GetDirectorsQuantity(List<Director> listDirectors)
         {
             int quantity = 0;
 
-            foreach(Director director in listDirectors)
+            foreach (Director director in listDirectors)
             {
-               quantity++;          
+                quantity++;
             }
             return quantity;
         }
@@ -464,7 +469,7 @@ namespace MoviesWebApi.Application
 
         public GetTotalRepositoriesDto GetTotalRepositories()
         {
-            
+
 
             int totalActors = _actorRepository.GetAllActor().Count;
             int totalDirectors = _directorRepository.GetAllDirectors().Count;
@@ -482,16 +487,16 @@ namespace MoviesWebApi.Application
                 TotalMoviesActor = totalMoviesActor
 
             };
-            return GetTotalRepositoriesDto;         
+            return GetTotalRepositoriesDto;
         }
 
         public Car GenerateCars()
         {
-            int id = 1; 
-            string name = "name"; 
-            string brand = "brand"; 
-            decimal speed = 10; 
-            string color ="yellow";
+            int id = 1;
+            string name = "name";
+            string brand = "brand";
+            decimal speed = 10;
+            string color = "yellow";
             Car car = new Car(id, name, brand, speed, color);
 
             int quantityOfElementsList = car.List.Count;
@@ -499,7 +504,7 @@ namespace MoviesWebApi.Application
             Car car2 = new Car(id, name, brand, speed, color);
 
             Car car3 = new Car(id, name, brand, speed, color);
-            foreach(int element in car3.List)
+            foreach (int element in car3.List)
             {
                 //do something
             }
@@ -507,8 +512,27 @@ namespace MoviesWebApi.Application
             return car;
         }
 
+
+        public GetValueResponseDto GetValue()
+        {
+
+            GetValueResponseDto getValueResponseDto = new GetValueResponseDto()
+            {
+                MyValue = _configuration.GetValue<string>("MyValue"),
+                MyGrades = _configuration.GetValue<decimal>("MyGrades"),
+                MyAccess = _configuration.GetValue<bool>("MyAccess"),
+                Height = _configuration.GetValue<int>("Destination:Height"),
+                Width = _configuration.GetValue<int>("Destination:Width"),
+            };
+            return getValueResponseDto;
+        }
+
+       
+
     }
 }
+
+
 
 
 

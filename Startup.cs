@@ -19,8 +19,11 @@ namespace MoviesWebApi
 
         private readonly IConfiguration _configuration;
 
+
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //injection of dependencies
          
             // Add DbContext
             services.AddDbContext<MovieDbContext>(options =>
@@ -44,13 +47,18 @@ namespace MoviesWebApi
             services.AddScoped<GetActorById.GetActorByIdHandler>();
             services.AddScoped<GetAllActors.GetAllActorsHandler>();
 
+
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MovieDbContext dbContext)
         {
+            //apply the migration when program start
+            dbContext.Database.Migrate();
+           
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();

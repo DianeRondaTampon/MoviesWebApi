@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace MoviesWebApi.Controllers
 {
@@ -247,8 +248,15 @@ namespace MoviesWebApi.Controllers
         public ActionResult<Car> GenerateCars()
         {
             Car car = _calculationService.GenerateCars();
-
             return Ok(car);
+        }
+
+        // GET: api/Calculation/GetValue
+        [HttpGet("GetValue")]
+        public ActionResult<GetValueResponseDto> GetValue()
+        {
+            GetValueResponseDto myValue = _calculationService.GetValue();
+            return Ok(myValue);
         }
 
 
