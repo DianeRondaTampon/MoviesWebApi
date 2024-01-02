@@ -259,6 +259,24 @@ namespace MoviesWebApi.Controllers
             return Ok(myValue);
         }
 
+        
+        // GET: api/Calculation/TestLog
+        [HttpGet("TestLog")]
+        public ActionResult<bool> TestLog()
+        {
+
+            bool response = _calculationService.TestLog();
+
+            return Ok(response);
+        }
+
+       
+
+
+       
+
+      
+
 
 
 

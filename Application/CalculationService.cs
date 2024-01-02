@@ -1,4 +1,5 @@
 ﻿using Azure;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
@@ -17,19 +18,23 @@ using System.Drawing.Printing;
 
 namespace MoviesWebApi.Application
 {
+   
+
     public class CalculationService
     {
+
         private readonly ActorRepository _actorRepository;
         private readonly DirectorRepository _directorRepository;
         private readonly GenderRepository _genderRepository;
         private readonly MovieActorRepository _movieActorRepository;
         private readonly MovieRepository _movieRepository;
         private readonly IConfiguration _configuration;
+        private readonly ILog _logger;
 
         //this is a constructor
         public CalculationService(ActorRepository actorRepository, DirectorRepository directorRepository,
             GenderRepository genderRepository, MovieActorRepository movieActorRepository, MovieRepository movieRepository,
-            IConfiguration configuration)
+            IConfiguration configuration, ILog logger)
         {
             this._actorRepository = actorRepository;
             this._directorRepository = directorRepository;
@@ -37,7 +42,7 @@ namespace MoviesWebApi.Application
             this._movieActorRepository = movieActorRepository;
             this._movieRepository = movieRepository;
             this._configuration = configuration;
-
+            this._logger = logger;
         }
 
 
@@ -527,7 +532,25 @@ namespace MoviesWebApi.Application
             return getValueResponseDto;
         }
 
-       
+        public bool TestLog()
+        {
+
+            // Use the logger
+            _logger.Debug("Debug message from service.");
+            _logger.Info("Info message from service.");
+            _logger.Warn("Warning message from service.");
+            _logger.Error("Error message from service.", new Exception("Something went wrong."));
+            _logger.Fatal("Fatal message from service.");
+
+   
+            return true;
+        }
+
+
+
+
+
+
 
     }
 }
