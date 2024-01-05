@@ -53,6 +53,12 @@ namespace MoviesWebApi.Controllers
         {
             MovieDto movieDtoCreated = _movieService.CreateMovie(movieDto);
 
+            if (movieDtoCreated == null)
+            {
+                return BadRequest("Invalid movie title provided");
+            }
+
+
             return Ok(movieDtoCreated);
         }
 

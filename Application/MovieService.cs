@@ -1,4 +1,5 @@
-﻿using MoviesWebApi.Dto;
+﻿using log4net;
+using MoviesWebApi.Dto;
 using MoviesWebApi.Models;
 using MoviesWebApi.Repositories;
 using NuGet.Packaging.Signing;
@@ -10,10 +11,14 @@ namespace MoviesWebApi.Application
     public class MovieService
     {
         private readonly MovieRepository _repository;
+        private readonly ILog _logger;
 
-        public MovieService(MovieRepository repository)
+        //this is a constructor
+      
+        public MovieService(MovieRepository repository, ILog logger)
         {
             _repository = repository;
+            this._logger = logger;
         }
 
         public List<MovieDto> GetAllMovies()
@@ -64,33 +69,66 @@ namespace MoviesWebApi.Application
 
         }
 
-        public MovieDto CreateMovie(MovieDto movieDto)
+        public MovieDto? CreateMovie(MovieDto movieDto)
         {
-            //I have a DTO and I need a MOVIE
-            Movie movie = new Movie()
+            MovieDto movieDtoCreated;
+            try
             {
+                if (string.IsNullOrEmpty(movieDto.Title))
+                {
+                    _logger.Error("Invalid movie title provided");
+                    return null;
+                }
 
-                Id = movieDto.Id,
-                Title = movieDto.Title,
-                Year = movieDto.Year,
-                DirectorId = movieDto.DirectorId,
-                GenderId = movieDto.GenderId
+                if (movieDto.Year < 1900 || movieDto.Year > 2100)
+                {
+                    _logger.Warn("Possible invalid movie year: " + movieDto.Title + movieDto.Year);
+                }
 
-            };
-            Movie movieCreated = _repository.AddMovie(movie);
-            //i have  movieCreated i need movieDtoCreated
-            MovieDto movieDtoCreated = new MovieDto()
+
+                //I have a DTO and I need a MOVIE
+                Movie movie = new Movie()
+                {
+
+                    Id = movieDto.Id,
+                    Title = movieDto.Title,
+                    Year = movieDto.Year,
+                    DirectorId = movieDto.DirectorId,
+                    GenderId = movieDto.GenderId
+
+                };
+                Movie movieCreated = _repository.AddMovie(movie);
+                _logger.Info("Movie added: " + movieDto.Title);
+
+
+                //i have  movieCreated i need movieDtoCreated
+                movieDtoCreated = new MovieDto()
+                {
+
+                    Id = movieCreated.Id,
+                    Title = movieCreated.Title,
+                    Year = movieCreated.Year,
+                    DirectorId = movieCreated.DirectorId,
+                    GenderId = movieCreated.GenderId
+                };
+            }
+            catch(Exception ex)
             {
-
-                Id = movieCreated.Id,
-                Title = movieCreated.Title,
-                Year = movieCreated.Year,
-                DirectorId = movieCreated.DirectorId,
-                GenderId = movieCreated.GenderId
-            };
+                _logger.Error("Error unknown: " + ex.Message, ex);             
+                throw;
+            }
 
             return movieDtoCreated;
         }
+
+
+
+
+
+
+
+
+
 
         public bool UpdateMovie(int id, MovieDto movieDto)
         {
