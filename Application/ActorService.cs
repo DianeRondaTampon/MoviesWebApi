@@ -32,7 +32,7 @@ namespace MoviesWebApi.Application
                 ActorDto actorDto = new ActorDto()
                 {
                     Id = actor.Id,
-                    Name = actor.Name,
+                    Name= actor.Name,
                 };
                 actorDtos.Add(actorDto);
             }

@@ -10,9 +10,9 @@ using log4net;
 using log4net.Config;
 using System.IO;
 using System.Reflection;
-
+using System.Runtime.CompilerServices;
 using System.Configuration;
-
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MoviesWebApi
@@ -30,11 +30,10 @@ namespace MoviesWebApi
    
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Configure log4net
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
-
 
 
             // Configure log4net using the configuration file
@@ -51,6 +50,9 @@ namespace MoviesWebApi
             services.AddDbContext<MovieDbContext>(options =>
                 options.UseLazyLoadingProxies()
                     .UseSqlServer(_configuration.GetConnectionString("MoviesDatabase")));
+
+
+
 
             // Add Repositories
             services.AddScoped<ActorRepository>();
@@ -81,9 +83,19 @@ namespace MoviesWebApi
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+
+            //configure identity
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+
+
+
         }
 
-        
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MovieDbContext dbContext)
         {
