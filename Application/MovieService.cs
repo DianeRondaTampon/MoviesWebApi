@@ -76,6 +76,7 @@ namespace MoviesWebApi.Application
             {
                 if (string.IsNullOrEmpty(movieDto.Title))
                 {
+
                     _logger.Error("Invalid movie title provided");
                     return null;
                 }
