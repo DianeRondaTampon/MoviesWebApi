@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Configuration;
 using Microsoft.AspNetCore.Identity;
-
+using MoviesWebApi.Infrastructure;
 
 namespace MoviesWebApi
 {
@@ -48,6 +48,10 @@ namespace MoviesWebApi
 
             // Add DbContext
             services.AddDbContext<MovieDbContext>(options =>
+                options.UseLazyLoadingProxies()
+                    .UseSqlServer(_configuration.GetConnectionString("MoviesDatabase")));
+
+            services.AddDbContext<IdentityDbContext>(options =>
                 options.UseLazyLoadingProxies()
                     .UseSqlServer(_configuration.GetConnectionString("MoviesDatabase")));
 
@@ -87,7 +91,7 @@ namespace MoviesWebApi
 
             //configure identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
 

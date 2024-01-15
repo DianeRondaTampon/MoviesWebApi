@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoviesWebApi.Infrastructure;
 using MoviesWebApi.Models;
 using System.Diagnostics.Metrics;
 

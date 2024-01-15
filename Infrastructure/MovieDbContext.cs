@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using System.Configuration;
 
-namespace MoviesWebApi
+namespace MoviesWebApi.Infrastructure
 {
     public class MovieDbContext : DbContext
     {
         private readonly IConfiguration _configuration;
-        public MovieDbContext(DbContextOptions<MovieDbContext> options, IConfiguration configuration) : base(options) 
+        public MovieDbContext(DbContextOptions<MovieDbContext> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;
         }
@@ -33,6 +33,6 @@ namespace MoviesWebApi
 
             }
         }
-       
+
     }
 }
