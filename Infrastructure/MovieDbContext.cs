@@ -16,9 +16,12 @@ namespace MoviesWebApi.Infrastructure
         public DbSet<Actor> Actor { get; set; }
         public DbSet<Director> Director { get; set; }
         public DbSet<Gender> Gender { get; set; }
-
         public DbSet<Movie> Movie { get; set; }
         public DbSet<MovieActor> MovieActor { get; set; }
+        public DbSet<RateMovie> RateMovie { get; set; }
+        
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

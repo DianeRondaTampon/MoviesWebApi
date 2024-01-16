@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer.Bytes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using MoviesWebApi;
 using MoviesWebApi.Application;
 using MoviesWebApi.Dto;
@@ -27,8 +29,8 @@ namespace MoviesWebApi.Controllers
         // GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetAllMovies()
-        {          
-                return Ok(_movieService.GetAllMovies());
+        {
+            return Ok(_movieService.GetAllMovies());
         }
 
         // GET: api/Movies/5
@@ -89,7 +91,7 @@ namespace MoviesWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            if (_movieService.DeleteMovie (id))
+            if (_movieService.DeleteMovie(id))
             {
                 return Ok();
             }
@@ -104,7 +106,7 @@ namespace MoviesWebApi.Controllers
         [HttpGet("getMovieFromYear")]
         public ActionResult<List<GetMoviesFromYearDto>> getMovieFromYear(int yearFrom, int yearUntil)
         {
-            List <GetMoviesFromYearDto> movies = _movieService.getMovieFromYear(yearFrom, yearUntil);
+            List<GetMoviesFromYearDto> movies = _movieService.getMovieFromYear(yearFrom, yearUntil);
             return Ok(movies);
         }
 
@@ -117,11 +119,7 @@ namespace MoviesWebApi.Controllers
             return Ok(moviesGender);
         }
 
-
-
-
-
-
-
-    }
+ 
+       
+    } 
 }

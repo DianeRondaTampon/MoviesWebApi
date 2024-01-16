@@ -4,3 +4,4 @@ update-database -context MovieDbContext
 
 add-migration $NAME -context IdentityDbContext
 update-database -context IdentityDbContext
+

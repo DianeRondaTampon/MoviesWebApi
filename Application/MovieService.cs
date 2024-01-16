@@ -14,7 +14,7 @@ namespace MoviesWebApi.Application
         private readonly ILog _logger;
 
         //this is a constructor
-      
+
         public MovieService(MovieRepository repository, ILog logger)
         {
             _repository = repository;
@@ -113,29 +113,20 @@ namespace MoviesWebApi.Application
                     GenderId = movieCreated.GenderId
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _logger.Error("Error unknown: " + ex.Message, ex);             
+                _logger.Error("Error unknown: " + ex.Message, ex);
                 throw;
             }
 
             return movieDtoCreated;
         }
 
-
-
-
-
-
-
-
-
-
         public bool UpdateMovie(int id, MovieDto movieDto)
         {
             Movie? getMovie = _repository.GetMovieById(id);
 
-            if (getMovie == null) 
+            if (getMovie == null)
             {
                 // It is not found the id of movie do not exist 
                 return false;
@@ -206,13 +197,13 @@ namespace MoviesWebApi.Application
             return moviesGenderDto;
         }
 
+        
 
-
-
-
-
-    }
+    }   
 }
+
+
+ 
             
  
 
