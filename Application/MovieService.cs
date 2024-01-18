@@ -5,47 +5,52 @@ using MoviesWebApi.Repositories;
 using NuGet.Packaging.Signing;
 using NuGet.Protocol.Core.Types;
 using System.IO;
+using System.Linq;
 
 namespace MoviesWebApi.Application
 {
     public class MovieService
     {
         private readonly MovieRepository _repository;
+        private readonly RateMovieRepository _rateMovieRepository;
         private readonly ILog _logger;
 
         //this is a constructor
 
-        public MovieService(MovieRepository repository, ILog logger)
+        public MovieService(MovieRepository repository, RateMovieRepository rateMovieRepository, ILog logger)
         {
             _repository = repository;
+            _rateMovieRepository = rateMovieRepository;
             this._logger = logger;
+           
         }
 
-        public List<MovieDto> GetAllMovies()
+        public List<GetAllMovieResponse> GetAllMovies()
         {
-            List<MovieDto> result = new List<MovieDto>();
+            List<GetAllMovieResponse> result = new List<GetAllMovieResponse>();
 
             List<Movie> movies = _repository.GetAllMovies().ToList();
 
             foreach (Movie movie in movies)
             {
 
-                MovieDto movieDto = new MovieDto()
+                GetAllMovieResponse movieResponse = new GetAllMovieResponse()
                 {
 
                     Id = movie.Id,
                     Title = movie.Title,
                     Year = movie.Year,
                     DirectorId = movie.DirectorId,
-                    GenderId = movie.GenderId
+                    GenderId = movie.GenderId,
+                    AverageRating = CalculateAverageRateMovie(movie.Id),
 
-                };
-                result.Add(movieDto);
+                }; 
+                result.Add(movieResponse);
             }
             return result;
         }
 
-        public MovieDto? GetMovieById(int id)
+        public GetAllMovieResponse? GetMovieById(int id)
         {
 
             Movie? movie = _repository.GetMovieById(id);
@@ -55,18 +60,51 @@ namespace MoviesWebApi.Application
             }
             else
             {
-                MovieDto movieDto = new MovieDto()
+                GetAllMovieResponse movieResponde = new GetAllMovieResponse()
                 {
                     Id = movie.Id,
                     Title = movie.Title,
                     Year = movie.Year,
                     DirectorId = movie.DirectorId,
-                    GenderId = movie.GenderId
+                    GenderId = movie.GenderId,
+                    AverageRating = CalculateAverageRateMovie(movie.Id)
                 };
-                return movieDto;
+                return movieResponde;
+            }
+        }
+
+        private decimal CalculateAverageRateMovie(int movieId)
+        {
+            //i will call the repository for the rates, NAME OF THE REPOSITORY IS RateMovieRepository
+
+            List <RateMovie> rateMovie = _rateMovieRepository.GetAllRateMovies().Where(r => r.MovieId == movieId).ToList();
+
+            //int sum = rateMovie.Sum(r => r.Rate); //lets do it normally without function sum
+            int sum = 0;
+            decimal count = rateMovie.Count;
+            decimal average;
+
+            //calculate sum of all elements of the list
+            //sum = sum + element
+            //when working with list when you need access to all the elements we learned how to do it in lesson of loops
+            //foreach is for traverse a list
+            
+            foreach (RateMovie rateMovieItem in rateMovie)
+            {
+                sum = sum + rateMovieItem.Rate;
             }
 
 
+
+            if (count > 0 )
+            {
+                average = sum / count;
+                return average;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public MovieDto? CreateMovie(MovieDto movieDto)

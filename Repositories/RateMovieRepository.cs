@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using log4net;
+using Microsoft.EntityFrameworkCore;
 using MoviesWebApi.Infrastructure;
 using MoviesWebApi.Models;
 using System.Diagnostics.Metrics;
@@ -9,10 +10,13 @@ namespace MoviesWebApi.Repositories
     {
 
         private readonly MovieDbContext _context;
+        private readonly ILog _logger;
 
-        public RateMovieRepository(MovieDbContext context)
+
+        public RateMovieRepository(MovieDbContext context, ILog logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IQueryable<RateMovie> GetAllRateMovies()
@@ -28,8 +32,17 @@ namespace MoviesWebApi.Repositories
 
         public RateMovie AddRateMovie(RateMovie rateMovie)
         {
-            _context.RateMovie.Add(rateMovie);
-            _context.SaveChanges();
+            try
+            {
+
+                _context.RateMovie.Add(rateMovie);
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex);
+                throw;
+            }
             return rateMovie;
         }
 

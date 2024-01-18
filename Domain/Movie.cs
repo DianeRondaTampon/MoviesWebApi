@@ -11,6 +11,8 @@ namespace MoviesWebApi.Models
         public int? DirectorId { get; set; }
         public int? GenderId { get; set; }
 
+     
+
         //navigation property
         public virtual Director Director { get; set; }
 

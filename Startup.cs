@@ -64,6 +64,7 @@ namespace MoviesWebApi
             services.AddScoped<GenderRepository>();
             services.AddScoped<MovieActorRepository>();
             services.AddScoped<MovieRepository>();
+            services.AddScoped<RateMovieRepository>();
 
             // Add Services
             services.AddScoped<ActorService>();
@@ -72,6 +73,7 @@ namespace MoviesWebApi
             services.AddScoped<GenderService>();
             services.AddScoped<MovieActorService>();
             services.AddScoped<MovieService>();
+            services.AddScoped<RateMovieService>();
             services.AddScoped<GetActorById.GetActorByIdHandler>();
             services.AddScoped<GetAllActors.GetAllActorsHandler>();
 

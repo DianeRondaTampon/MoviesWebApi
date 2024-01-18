@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MoviesWebApi.Models
+﻿namespace MoviesWebApi.Dto
 {
-    public class MovieDto
+    public class GetAllMovieByIdResponse
     {
         //properties
         public int Id { get; set; }
@@ -10,12 +8,9 @@ namespace MoviesWebApi.Models
         public int? Year { get; set; }
         public int? DirectorId { get; set; }
         public int? GenderId { get; set; }
+        public decimal AverageRating { get; set; }
 
-      
 
-        //constructor
-        public MovieDto() { 
-        }
 
     }
 }

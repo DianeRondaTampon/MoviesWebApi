@@ -35,9 +35,9 @@ namespace MoviesWebApi.Controllers
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieDto>> GetMovie(int id)
+        public async Task<ActionResult<GetAllMovieResponse>> GetMovie(int id)
         {
-            MovieDto? movie = _movieService.GetMovieById(id);
+            GetAllMovieResponse? movie = _movieService.GetMovieById(id);
             if (movie == null)
             {
                 return NotFound();

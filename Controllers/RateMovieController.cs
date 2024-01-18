@@ -5,6 +5,8 @@ using MoviesWebApi.Models;
 
 namespace MoviesWebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class RateMovieController : ControllerBase
     {
         private readonly RateMovieService _rateMovieService;

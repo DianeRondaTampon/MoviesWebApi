@@ -43,7 +43,7 @@ namespace MoviesWebApi.Application
                 return message;
             }
             
-            //we will check if the movie id not exists (return message error)
+            //we will  
             Movie? movie = _movieRepository.GetMovieById(createRateMovieRequest.MovieId);
 
             if (movie == null)
